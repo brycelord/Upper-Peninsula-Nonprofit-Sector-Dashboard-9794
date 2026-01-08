@@ -1,310 +1,317 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
+import { RAW_NONPROFIT_DATA, COUNTIES, SECTORS } from '../services/dataService';
+import AdvancedFilterSidebar from '../components/AdvancedFilterSidebar';
+import OrgDeepProfile from '../components/OrgDeepProfile';
 import * as FiIcons from 'react-icons/fi';
 
 const { 
-  FiSearch, FiFilter, FiDownload, FiTable, FiBarChart3, 
-  FiMapPin, FiTrash2, FiChevronDown, FiInfo, FiLayers 
+  FiSearch, FiDownload, FiMapPin, FiCheckCircle, FiChevronLeft, 
+  FiChevronRight, FiGrid, FiList, FiFileText, FiExternalLink, 
+  FiEye, FiX, FiFilter, FiTrendingUp, FiArrowUp, FiArrowDown 
 } = FiIcons;
 
 const DataExplorer = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCounty, setSelectedCounty] = useState('All Counties');
-  const [selectedSector, setSelectedSector] = useState('All Sectors');
-  const [selectedYear, setSelectedYear] = useState('2022');
-  const [viewMode, setViewMode] = useState('table');
-  const [minEmployees, setMinEmployees] = useState(0);
-  const [minWage, setMinWage] = useState(0);
-
-  const counties = ['All Counties', 'Marquette', 'Houghton', 'Chippewa', 'Delta', 'Dickinson', 'Menominee', 'Gogebic', 'Iron', 'Mackinac', 'Baraga', 'Alger', 'Schoolcraft', 'Luce', 'Ontonagon', 'Keweenaw'];
-  const sectors = ['All Sectors', 'Healthcare & Medical', 'Education', 'Human Services', 'Arts & Culture', 'Environmental', 'Religious', 'Community Development', 'Other'];
-  const years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
-
-  const sampleData = [
-    { id: 1, name: 'Marquette General Hospital Foundation', county: 'Marquette', sector: 'Healthcare & Medical', employees: 245, avgWage: 45200, year: 2022, impact: 'High' },
-    { id: 2, name: 'Northern Michigan University', county: 'Marquette', sector: 'Education', employees: 1890, avgWage: 42100, year: 2022, impact: 'Critical' },
-    { id: 3, name: 'Michigan Tech Foundation', county: 'Houghton', sector: 'Education', employees: 567, avgWage: 48300, year: 2022, impact: 'High' },
-    { id: 4, name: 'Keweenaw Community Foundation', county: 'Houghton', sector: 'Community Development', employees: 34, avgWage: 38900, year: 2022, impact: 'Medium' },
-    { id: 5, name: 'UP Health System', county: 'Marquette', sector: 'Healthcare & Medical', employees: 2340, avgWage: 46700, year: 2022, impact: 'Critical' },
-    { id: 6, name: 'Sault Ste. Marie Community Foundation', county: 'Chippewa', sector: 'Community Development', employees: 28, avgWage: 35600, year: 2022, impact: 'Medium' },
-    { id: 7, name: 'Escanaba Area Community Foundation', county: 'Delta', sector: 'Community Development', employees: 45, avgWage: 37200, year: 2022, impact: 'Medium' },
-    { id: 8, name: 'Iron Mountain Community Foundation', county: 'Dickinson', sector: 'Community Development', employees: 23, avgWage: 36800, year: 2022, impact: 'Low' },
-    { id: 9, name: 'Superior Watershed Partnership', county: 'Marquette', sector: 'Environmental', employees: 56, avgWage: 41000, year: 2022, impact: 'High' },
-    { id: 10, name: 'Bay Cliff Health Camp', county: 'Marquette', sector: 'Healthcare & Medical', employees: 112, avgWage: 32500, year: 2022, impact: 'High' }
-  ];
+  const [selectedOrg, setSelectedOrg] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: 'revenue', direction: 'desc' });
+  const [filters, setFilters] = useState({
+    county: 'All',
+    sector: 'All',
+    revenueTier: 'All',
+    fteTier: 'All',
+    houseDist: 'All',
+    verifiedOnly: false,
+    filingType: 'All',
+    efficiencyTier: 'All',
+    locationSearch: ''
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
 
   const filteredData = useMemo(() => {
-    return sampleData.filter(item => {
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCounty = selectedCounty === 'All Counties' || item.county === selectedCounty;
-      const matchesSector = selectedSector === 'All Sectors' || item.sector === selectedSector;
-      const matchesYear = item.year.toString() === selectedYear;
-      const matchesEmployees = item.employees >= minEmployees;
-      const matchesWage = item.avgWage >= minWage;
-      return matchesSearch && matchesCounty && matchesSector && matchesYear && matchesEmployees && matchesWage;
-    });
-  }, [searchTerm, selectedCounty, selectedSector, selectedYear, minEmployees, minWage]);
-
-  const resetFilters = () => {
-    setSearchTerm('');
-    setSelectedCounty('All Counties');
-    setSelectedSector('All Sectors');
-    setSelectedYear('2022');
-    setMinEmployees(0);
-    setMinWage(0);
-  };
-
-  const handleExport = () => {
-    const csvContent = [
-      ['Organization', 'County', 'Sector', 'Employees', 'Average Wage', 'Impact Tier', 'Year'].join(','),
-      ...filteredData.map(item => [
-        `"${item.name}"`, item.county, `"${item.sector}"`, item.employees, item.avgWage, item.impact, item.year
-      ].join(','))
-    ].join('\n');
+    const currentYearData = RAW_NONPROFIT_DATA.filter(d => d.year === 2022);
     
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `UP_Nonprofit_Export_${selectedYear}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+    let filtered = currentYearData.filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                           item.ein.includes(searchTerm);
+      if (!matchesSearch) return false;
+
+      // Basic Filters
+      if (filters.county !== 'All' && item.county !== filters.county) return false;
+      if (filters.sector !== 'All' && item.sector !== filters.sector) return false;
+      if (filters.verifiedOnly && !item.is_verified) return false;
+      if (filters.filingType !== 'All' && item.filing_type !== filters.filingType) return false;
+
+      // House District Filter
+      if (filters.houseDist !== 'All' && item.legislative?.house !== filters.houseDist) return false;
+
+      // Location Search (City/Zip)
+      if (filters.locationSearch) {
+        const locMatch = item.city?.toLowerCase().includes(filters.locationSearch.toLowerCase()) || 
+                        item.zip?.includes(filters.locationSearch);
+        if (!locMatch) return false;
+      }
+
+      // Revenue Logic
+      if (filters.revenueTier !== 'All') {
+        const rev = item.revenue;
+        if (filters.revenueTier === 'Grassroots' && rev >= 50000) return false;
+        if (filters.revenueTier === 'Small' && (rev < 50000 || rev >= 250000)) return false;
+        if (filters.revenueTier === 'Mid-Size' && (rev < 250000 || rev >= 1000000)) return false;
+        if (filters.revenueTier === 'Enterprise' && rev < 1000000) return false;
+      }
+
+      // FTE Logic
+      if (filters.fteTier !== 'All') {
+        const emp = item.employees;
+        if (filters.fteTier === '1-5' && emp > 5) return false;
+        if (filters.fteTier === '6-20' && (emp < 6 || emp > 20)) return false;
+        if (filters.fteTier === '21-50' && (emp < 21 || emp > 50)) return false;
+        if (filters.fteTier === '51+' && emp < 51) return false;
+      }
+
+      // Efficiency Logic
+      if (filters.efficiencyTier !== 'All') {
+        const eff = (item.program_rev / item.revenue) * 100;
+        if (filters.efficiencyTier === 'High' && eff < 85) return false;
+        if (filters.efficiencyTier === 'Standard' && (eff < 70 || eff >= 85)) return false;
+        if (filters.efficiencyTier === 'Low' && eff >= 70) return false;
+      }
+
+      return true;
+    });
+
+    // Handle Sorting
+    return filtered.sort((a, b) => {
+      const aVal = a[sortConfig.key];
+      const bVal = b[sortConfig.key];
+      if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+  }, [searchTerm, filters, sortConfig]);
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredData.slice(start, start + itemsPerPage);
+  }, [filteredData, currentPage]);
+
+  const handleSort = (key) => {
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'desc' ? 'asc' : 'desc'
+    }));
   };
+
+  const removeFilter = (key, defaultValue = 'All') => {
+    setFilters(prev => ({ ...prev, [key]: defaultValue }));
+  };
+
+  const activeFilterCount = Object.entries(filters).filter(([key, val]) => {
+    if (key === 'verifiedOnly') return val === true;
+    return val !== 'All' && val !== '';
+  }).length;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h1 className="text-4xl font-black text-gray-900 mb-2" style={{ fontFamily: 'futura-pt, sans-serif' }}>
-                Data Explorer
-              </h1>
-              <p className="text-gray-600 font-medium">Advanced search and export utility for regional economic research.</p>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <AnimatePresence>
+          {selectedOrg && (
+            <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm">
+              <OrgDeepProfile org={selectedOrg} onClose={() => setSelectedOrg(null)} />
             </div>
-            <div className="flex gap-3">
-              <button 
-                onClick={handleExport}
-                className="flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all shadow-lg active:scale-95"
-              >
-                <SafeIcon icon={FiDownload} /> Export Dataset
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Search & Stats Ribbon */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-          <div className="lg:col-span-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-200 flex items-center gap-4">
-            <div className="flex-grow relative">
-              <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
-              <input 
-                type="text" 
-                placeholder="Search by organization name or keyword..."
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-yellow-400 transition-all font-medium"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="h-8 w-px bg-gray-200 hidden md:block" />
-            <div className="hidden md:flex items-center gap-2 px-4 whitespace-nowrap">
-              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Found:</span>
-              <span className="text-xl font-black text-gray-900">{filteredData.length}</span>
-            </div>
-          </div>
-          
-          <div className="bg-yellow-400 p-4 rounded-2xl shadow-lg flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-black/10 rounded-lg"><SafeIcon icon={FiLayers} /></div>
-              <span className="font-bold text-black">Active Filters</span>
-            </div>
-            <button 
-              onClick={resetFilters}
-              className="p-2 hover:bg-black/10 rounded-lg transition-colors text-black"
-              title="Reset all filters"
-            >
-              <SafeIcon icon={FiTrash2} />
-            </button>
-          </div>
-        </div>
+          )}
+        </AnimatePresence>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Filters Sidebar */}
+          
+          {/* Sidebar */}
           <div className="lg:col-span-3 space-y-6">
-            <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
-              <h3 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6 flex items-center gap-2">
-                <SafeIcon icon={FiFilter} className="text-yellow-500" /> Filter Parameters
+            <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100">
+              <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <SafeIcon icon={FiFileText} className="text-blue-500" />
+                ProPublica Filing Type
               </h3>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Region/County</label>
-                  <select 
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 outline-none focus:border-yellow-400"
-                    value={selectedCounty}
-                    onChange={(e) => setSelectedCounty(e.target.value)}
+              <div className="grid grid-cols-2 gap-2">
+                {['All', '990', '990EZ', '990PF'].map(type => (
+                  <button 
+                    key={type}
+                    onClick={() => setFilters(f => ({ ...f, filingType: type }))}
+                    className={`text-left px-3 py-2 rounded-xl text-[9px] font-black uppercase transition-all ${
+                      filters.filingType === type ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
+                    }`}
                   >
-                    {counties.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Nonprofit Sector</label>
-                  <select 
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 outline-none focus:border-yellow-400"
-                    value={selectedSector}
-                    onChange={(e) => setSelectedSector(e.target.value)}
-                  >
-                    {sectors.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Fiscal Year</label>
-                  <select 
-                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-700 outline-none focus:border-yellow-400"
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                  >
-                    {years.map(y => <option key={y} value={y}>{y}</option>)}
-                  </select>
-                </div>
-
-                <div className="pt-4 border-t border-gray-100">
-                  <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Min. Employees ({minEmployees})</label>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="1000" 
-                    step="50"
-                    className="w-full accent-yellow-400"
-                    value={minEmployees}
-                    onChange={(e) => setMinEmployees(parseInt(e.target.value))}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Min. Avg Wage (${minWage.toLocaleString()})</label>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="60000" 
-                    step="5000"
-                    className="w-full accent-teal-500"
-                    value={minWage}
-                    onChange={(e) => setMinWage(parseInt(e.target.value))}
-                  />
-                </div>
+                    {type === 'All' ? 'All Forms' : `Form ${type}`}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="bg-blue-900 rounded-2xl shadow-xl p-6 text-white text-sm">
-              <div className="flex items-center gap-2 mb-3 text-yellow-400 font-bold">
-                <SafeIcon icon={FiInfo} /> Methodology
-              </div>
-              <p className="text-blue-100 leading-relaxed">
-                Data is aggregated from IRS Form 990 filings and QCEW employment reports. Average wages are calculated as total annual payroll divided by FTE count.
-              </p>
-            </div>
+            <AdvancedFilterSidebar 
+              filters={filters} 
+              setFilters={setFilters} 
+              onClear={() => setFilters({
+                county: 'All', sector: 'All', revenueTier: 'All', fteTier: 'All',
+                houseDist: 'All', verifiedOnly: false, filingType: 'All',
+                efficiencyTier: 'All', locationSearch: ''
+              })}
+              resultsCount={filteredData.length}
+            />
           </div>
 
-          {/* Main Table Content */}
-          <div className="lg:col-span-9">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-              <div className="px-6 py-4 bg-gray-50 border-b border-gray-100 flex justify-between items-center">
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => setViewMode('table')}
-                    className={`p-2 rounded-lg transition-all ${viewMode === 'table' ? 'bg-white shadow-sm text-yellow-600' : 'text-gray-400 hover:text-gray-600'}`}
-                  >
-                    <SafeIcon icon={FiTable} />
-                  </button>
-                  <button 
-                    onClick={() => setViewMode('chart')}
-                    className={`p-2 rounded-lg transition-all ${viewMode === 'chart' ? 'bg-white shadow-sm text-yellow-600' : 'text-gray-400 hover:text-gray-600'}`}
-                  >
-                    <SafeIcon icon={FiBarChart3} />
-                  </button>
+          {/* Main List */}
+          <div className="lg:col-span-9 space-y-6">
+            
+            {/* Search Bar & Active Filters */}
+            <div className="space-y-4">
+              <div className="bg-white p-4 rounded-3xl shadow-xl border border-gray-100 flex flex-col md:flex-row items-center gap-4">
+                <div className="flex-grow relative w-full">
+                  <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input 
+                    type="text" 
+                    placeholder="Deep search EIN, Organization Legal Name, or Form Type..." 
+                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-yellow-400 transition-all font-medium text-sm"
+                    value={searchTerm}
+                    onChange={(e) => {setSearchTerm(e.target.value); setCurrentPage(1);}}
+                  />
                 </div>
-                <span className="text-xs font-bold text-gray-400">Viewing {filteredData.length} of {sampleData.length} records</span>
+                <button className="px-6 py-3 bg-gray-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-black transition-all shadow-lg">
+                  <SafeIcon icon={FiDownload} />
+                  Export Registry
+                </button>
               </div>
 
+              {/* Filter Chips Area */}
+              <AnimatePresence>
+                {activeFilterCount > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-wrap items-center gap-2"
+                  >
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-900 rounded-full text-[9px] font-black text-yellow-400 uppercase tracking-widest">
+                      <SafeIcon icon={FiFilter} />
+                      {activeFilterCount} Active
+                    </div>
+                    
+                    {filters.county !== 'All' && (
+                      <Chip label={`County: ${filters.county}`} onRemove={() => removeFilter('county')} />
+                    )}
+                    {filters.sector !== 'All' && (
+                      <Chip label={`Sector: ${filters.sector}`} onRemove={() => removeFilter('sector')} />
+                    )}
+                    {filters.revenueTier !== 'All' && (
+                      <Chip label={`Rev: ${filters.revenueTier}`} onRemove={() => removeFilter('revenueTier')} />
+                    )}
+                    {filters.fteTier !== 'All' && (
+                      <Chip label={`Staff: ${filters.fteTier}`} onRemove={() => removeFilter('fteTier')} />
+                    )}
+                    {filters.efficiencyTier !== 'All' && (
+                      <Chip label={`ROI: ${filters.efficiencyTier}`} onRemove={() => removeFilter('efficiencyTier')} />
+                    )}
+                    {filters.locationSearch && (
+                      <Chip label={`Loc: ${filters.locationSearch}`} onRemove={() => removeFilter('locationSearch', '')} />
+                    )}
+                    {filters.verifiedOnly && (
+                      <Chip label="Verified Only" onRemove={() => removeFilter('verifiedOnly', false)} />
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-gray-100">
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-white">
+                <table className="min-w-full divide-y divide-gray-100">
+                  <thead className="bg-gray-50/50">
                     <tr>
-                      <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-widest">Organization</th>
-                      <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-widest">County</th>
-                      <th className="px-6 py-4 text-left text-xs font-black text-gray-400 uppercase tracking-widest">Sector</th>
-                      <th className="px-6 py-4 text-right text-xs font-black text-gray-400 uppercase tracking-widest">Employees</th>
-                      <th className="px-6 py-4 text-right text-xs font-black text-gray-400 uppercase tracking-widest">Avg Wage</th>
-                      <th className="px-6 py-4 text-center text-xs font-black text-gray-400 uppercase tracking-widest">Impact</th>
+                      <th className="px-8 py-6 text-left">
+                        <SortHeader label="Organization & EIN" active={sortConfig.key === 'name'} onClick={() => handleSort('name')} />
+                      </th>
+                      <th className="px-8 py-6 text-left">
+                        <SortHeader label="Efficiency" active={sortConfig.key === 'program_rev'} onClick={() => handleSort('program_rev')} />
+                      </th>
+                      <th className="px-8 py-6 text-left">
+                        <SortHeader label="Economic Capacity" active={sortConfig.key === 'revenue'} onClick={() => handleSort('revenue')} />
+                      </th>
+                      <th className="px-8 py-6 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-50">
-                    <AnimatePresence>
-                      {filteredData.length > 0 ? (
-                        filteredData.map((item, idx) => (
-                          <motion.tr 
-                            key={item.id}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="hover:bg-yellow-50/30 transition-colors group cursor-default"
-                          >
-                            <td className="px-6 py-4">
-                              <span className="text-sm font-bold text-gray-900 group-hover:text-yellow-700 transition-colors">{item.name}</span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
-                                <SafeIcon icon={FiMapPin} className="text-gray-300" /> {item.county}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-2.5 py-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase rounded-lg border border-blue-100">
-                                {item.sector}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-right whitespace-nowrap">
-                              <span className="text-sm font-bold text-gray-900">{item.employees.toLocaleString()}</span>
-                            </td>
-                            <td className="px-6 py-4 text-right whitespace-nowrap">
-                              <span className="text-sm font-black text-teal-600">${item.avgWage.toLocaleString()}</span>
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                              <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${
-                                item.impact === 'Critical' ? 'bg-red-100 text-red-700' :
-                                item.impact === 'High' ? 'bg-orange-100 text-orange-700' :
-                                'bg-gray-100 text-gray-700'
-                              }`}>
-                                {item.impact}
-                              </span>
-                            </td>
-                          </motion.tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="6" className="px-6 py-20 text-center">
-                            <div className="flex flex-col items-center gap-4">
-                              <div className="p-4 bg-gray-50 rounded-full text-gray-300">
-                                <SafeIcon icon={FiSearch} className="text-4xl" />
-                              </div>
-                              <p className="text-gray-500 font-bold">No organizations match your current filters.</p>
-                              <button 
-                                onClick={resetFilters}
-                                className="text-yellow-600 font-black text-xs uppercase tracking-widest hover:underline"
-                              >
-                                Clear All Filters
-                              </button>
+                  <tbody className="divide-y divide-gray-50">
+                    {paginatedData.map((item) => (
+                      <tr 
+                        key={item.ein} 
+                        className="hover:bg-gray-50 transition-colors group cursor-pointer"
+                        onClick={() => setSelectedOrg(item)}
+                      >
+                        <td className="px-8 py-6">
+                          <div className="text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-blue-600 transition-colors">{item.name}</div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[9px] font-bold text-gray-400 uppercase">EIN: {item.ein}</span>
+                            <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                            <span className="text-[9px] font-bold text-gray-400 uppercase">{item.county} County</span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <div className="flex flex-col">
+                            <span className="text-sm font-black text-gray-900">
+                              {((item.program_rev / item.revenue) * 100).toFixed(0)}% ROI
+                            </span>
+                            <div className="w-16 h-1 bg-gray-100 rounded-full mt-1 overflow-hidden">
+                              <div 
+                                className={`h-full ${item.program_rev/item.revenue > 0.8 ? 'bg-green-500' : 'bg-yellow-400'}`}
+                                style={{ width: `${(item.program_rev / item.revenue) * 100}%` }}
+                              />
                             </div>
-                          </td>
-                        </tr>
-                      )}
-                    </AnimatePresence>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <div className="flex flex-col">
+                            <span className="text-sm font-black text-gray-900">${(item.revenue / 1e6).toFixed(2)}M Rev</span>
+                            <span className="text-[9px] font-bold text-teal-600 uppercase tracking-widest">{item.employees} Personnel</span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 text-right">
+                          <button 
+                            className="p-3 bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-yellow-400 rounded-2xl transition-all"
+                            onClick={(e) => {e.stopPropagation(); setSelectedOrg(item);}}
+                          >
+                            <SafeIcon icon={FiEye} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Pagination */}
+              <div className="p-8 bg-gray-50/50 border-t border-gray-50 flex items-center justify-between">
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                  Showing {(currentPage - 1) * itemsPerPage + 1} — {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} Records
+                </span>
+                <div className="flex items-center gap-4">
+                  <button 
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage(p => p - 1)}
+                    className="p-3 bg-white rounded-xl shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
+                  >
+                    <SafeIcon icon={FiChevronLeft} />
+                  </button>
+                  <span className="text-xs font-black italic">{currentPage} / {totalPages}</span>
+                  <button 
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    className="p-3 bg-white rounded-xl shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
+                  >
+                    <SafeIcon icon={FiChevronRight} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -313,5 +320,32 @@ const DataExplorer = () => {
     </div>
   );
 };
+
+// Internal Helper Components
+const Chip = ({ label, onRemove }) => (
+  <motion.div 
+    initial={{ scale: 0.8, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    className="flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 rounded-lg shadow-sm"
+  >
+    <span className="text-[9px] font-black uppercase text-gray-500 tracking-tight">{label}</span>
+    <button onClick={onRemove} className="text-gray-300 hover:text-red-500 transition-colors">
+      <SafeIcon icon={FiX} className="text-[10px]" />
+    </button>
+  </motion.div>
+);
+
+const SortHeader = ({ label, active, onClick }) => (
+  <button 
+    onClick={onClick}
+    className="flex items-center gap-2 group text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-gray-600 transition-colors"
+  >
+    {label}
+    <div className={`flex flex-col items-center leading-none ${active ? 'text-yellow-500' : 'text-gray-200 group-hover:text-gray-300'}`}>
+      <SafeIcon icon={FiArrowUp} className="text-[8px]" />
+      <SafeIcon icon={FiArrowDown} className="text-[8px] -mt-0.5" />
+    </div>
+  </button>
+);
 
 export default DataExplorer;

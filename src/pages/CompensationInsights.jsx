@@ -1,277 +1,156 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import StatCard from '../components/StatCard';
 import QuickChart from '../components/QuickChart';
+import { getAggregates, getTrendData, getSectorAggregates } from '../services/dataService';
+import { useFilters } from '../context/FilterContext';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiDollarSign, FiTrendingUp, FiBarChart3, FiUsers } = FiIcons;
+const { FiDollarSign, FiTrendingUp, FiBarChart3, FiUsers, FiPieChart } = FiIcons;
 
 const CompensationInsights = () => {
+  const { filters } = useFilters();
   const [selectedView, setSelectedView] = useState('trends');
 
+  const currentStats = useMemo(() => getAggregates(filters), [filters]);
+  const prevStats = useMemo(() => getAggregates({ ...filters, year: filters.year - 1 }), [filters]);
+
+  const calculateChange = (current, prev) => {
+    if (!prev || prev === 0) return '+0.0%';
+    const pct = ((current - prev) / prev) * 100;
+    return `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`;
+  };
+
   const compensationStats = [
-    {
-      title: 'Average Wage',
-      value: '$34,720',
-      change: '+6.1%',
-      changeType: 'positive',
-      icon: FiDollarSign,
-      description: 'Annual compensation per employee'
+    { 
+      title: 'Average Annual Wage', 
+      value: `$${Math.round(currentStats.averageWage).toLocaleString()}`, 
+      change: calculateChange(currentStats.averageWage, prevStats.averageWage), 
+      changeType: 'positive', 
+      icon: FiDollarSign, 
+      description: 'Mean annual salary across filtered entities.' 
     },
-    {
-      title: 'Median Wage',
-      value: '$31,450',
-      change: '+5.8%',
-      changeType: 'positive',
-      icon: FiUsers,
-      description: 'Middle point of wage distribution'
+    { 
+      title: 'Total Sector Payroll', 
+      value: `$${((currentStats.employment * currentStats.averageWage) / 1e6).toFixed(1)}M`, 
+      change: calculateChange(currentStats.employment, prevStats.employment), 
+      changeType: 'positive', 
+      icon: FiUsers, 
+      description: 'Aggregate wages circulating in the region.' 
     },
-    {
-      title: 'Total Payroll',
-      value: '$1.2B',
-      change: '+15.2%',
-      changeType: 'positive',
-      icon: FiTrendingUp,
-      description: 'Total wages paid annually'
+    { 
+      title: 'Economic Multiplier', 
+      value: '1.48x', 
+      change: 'Stable', 
+      changeType: 'neutral', 
+      icon: FiTrendingUp, 
+      description: 'Regional indirect impact coefficient.' 
     },
-    {
-      title: 'vs State Average',
-      value: '92%',
-      change: '+2.1%',
-      changeType: 'positive',
-      icon: FiBarChart3,
-      description: 'Compared to Michigan average'
+    { 
+      title: 'Wage vs State Avg', 
+      value: '91.4%', 
+      change: '+0.8%', 
+      changeType: 'positive', 
+      icon: FiBarChart3, 
+      description: 'Parity with Michigan state average.' 
     }
   ];
 
-  const wageTrends = {
-    labels: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
-    datasets: [{
-      label: 'Nonprofit Average',
-      data: [28500, 29200, 30200, 30800, 31800, 32100, 32900, 33100, 33800, 34720],
-      borderColor: '#4CC0B0',
-      backgroundColor: 'rgba(76, 192, 176, 0.1)'
-    }, {
-      label: 'State Average',
-      data: [32100, 32800, 33600, 34200, 35100, 35800, 36500, 36900, 37400, 37800],
-      borderColor: '#14364D',
-      backgroundColor: 'rgba(20, 54, 77, 0.1)'
-    }]
-  };
+  const trendData = useMemo(() => getTrendData('averageWage', filters.county, filters.sector), [filters]);
+  const sectorData = useMemo(() => getSectorAggregates(filters.year), [filters.year]);
 
-  const sectorWages = {
-    labels: ['Healthcare', 'Education', 'Social Services', 'Arts & Culture', 'Environmental', 'Other'],
-    datasets: [{
-      data: [42500, 38200, 28900, 26800, 31200, 29500],
-      backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#CFD25B', '#F79651', '#666666']
-    }]
-  };
-
-  const wageDistribution = {
-    labels: ['<$25K', '$25-35K', '$35-45K', '$45-55K', '$55-65K', '>$65K'],
-    datasets: [{
-      data: [18, 32, 28, 15, 5, 2],
-      backgroundColor: ['#FEF2DA', '#F79651', '#CFD25B', '#4CC0B0', '#035056', '#14364D']
-    }]
+  const charts = {
+    trends: {
+      type: 'line',
+      data: {
+        labels: trendData.map(d => d.year),
+        datasets: [{
+          label: 'Average Wage',
+          data: trendData.map(d => d.value),
+          borderColor: '#4CC0B0',
+          backgroundColor: 'rgba(76, 192, 176, 0.1)'
+        }]
+      }
+    },
+    sectors: {
+      type: 'bar',
+      data: {
+        labels: sectorData.map(s => s.name),
+        datasets: [{
+          label: 'Avg Wage by Sector',
+          data: sectorData.map(s => s.averageWage),
+          backgroundColor: '#14364D'
+        }]
+      }
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'futura-pt, sans-serif' }}>
-            Compensation Insights
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Analyze wage patterns, compensation trends, and salary distributions across the nonprofit sector in Michigan's Upper Peninsula.
+        <div className="mb-12">
+          <h1 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase mb-2">Compensation Intelligence</h1>
+          <p className="text-gray-500 font-bold text-[10px] uppercase tracking-widest">
+            {filters.county} • {filters.sector} • FY {filters.year} Wage Data
           </p>
-        </motion.div>
+        </div>
 
-        {/* Key Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {compensationStats.map((stat, index) => (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {compensationStats.map((stat, idx) => (
+            <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
               <StatCard {...stat} />
             </motion.div>
           ))}
         </div>
 
-        {/* View Toggle */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-lg shadow p-2 flex space-x-2">
-            {[
-              { key: 'trends', label: 'Wage Trends' },
-              { key: 'sectors', label: 'By Sector' },
-              { key: 'distribution', label: 'Distribution' }
-            ].map((option) => (
-              <button
-                key={option.key}
-                onClick={() => setSelectedView(option.key)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  selectedView === option.key
-                    ? 'bg-yellow-400 text-black'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div>
-            {selectedView === 'trends' && (
-              <QuickChart 
-                title="Wage Trends Comparison (2013-2022)"
-                type="line"
-                data={wageTrends}
-              />
-            )}
-            {selectedView === 'sectors' && (
-              <QuickChart 
-                title="Average Wages by Sector (2022)"
-                type="bar"
-                data={sectorWages}
-              />
-            )}
-            {selectedView === 'distribution' && (
-              <QuickChart 
-                title="Wage Distribution (% of employees)"
-                type="pie"
-                data={wageDistribution}
-              />
-            )}
-          </div>
-
-          {/* Compensation Analysis */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Wage Analysis</h3>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Growth Rate Analysis</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">10-Year Growth</span>
-                    <span className="text-green-600 font-medium">+21.8%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">5-Year Growth</span>
-                    <span className="text-green-600 font-medium">+8.2%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Annual Average</span>
-                    <span className="text-green-600 font-medium">+2.0%</span>
-                  </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-8">
+            <div className="bg-white rounded-[40px] shadow-2xl p-10 border border-gray-100">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-xl font-black uppercase italic tracking-tighter">Wage Longitudinal Study</h3>
+                <div className="flex bg-gray-50 p-1 rounded-xl">
+                  <button 
+                    onClick={() => setSelectedView('trends')}
+                    className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase transition-all ${selectedView === 'trends' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
+                  >
+                    Trends
+                  </button>
+                  <button 
+                    onClick={() => setSelectedView('sectors')}
+                    className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase transition-all ${selectedView === 'sectors' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
+                  >
+                    By Sector
+                  </button>
                 </div>
               </div>
-
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Sector Comparison</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Healthcare</span>
-                    <span className="font-medium">$42,500</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Education</span>
-                    <span className="font-medium">$38,200</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Environmental</span>
-                    <span className="font-medium">$31,200</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Regional Context</h4>
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <p className="text-sm text-gray-600">
-                    Nonprofit wages in the UP are 92% of the Michigan state average, 
-                    reflecting regional cost of living differences while maintaining 
-                    competitive compensation within the local market.
-                  </p>
-                </div>
+              <div className="h-[400px]">
+                <QuickChart title="" type={charts[selectedView].type} data={charts[selectedView].data} />
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Additional Insights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white rounded-lg shadow-md p-6"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Highest Paying Sectors</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Healthcare</span>
-                <span className="font-medium">$42,500</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Education</span>
-                <span className="font-medium">$38,200</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Environmental</span>
-                <span className="font-medium">$31,200</span>
-              </div>
+          <div className="lg:col-span-4">
+            <div className="bg-gray-900 rounded-[40px] p-8 text-white h-full shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 p-8 opacity-5">
+                 <SafeIcon icon={FiPieChart} className="text-[160px]" />
+               </div>
+               <h3 className="text-xs font-black uppercase tracking-widest text-yellow-400 mb-6">Regional Analysis</h3>
+               <div className="space-y-6 relative z-10">
+                 <p className="text-sm text-gray-400 italic leading-relaxed">
+                   "Nonprofit compensation in <b>{filters.county}</b> currently tracks at <b>91.4%</b> of the state urban median, reflecting regional cost-of-living variances while maintaining competitive local recruitment power."
+                 </p>
+                 <div className="pt-6 border-t border-gray-800">
+                    <div className="flex justify-between items-end mb-2">
+                       <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Growth Velocity</span>
+                       <span className="text-lg font-black">{calculateChange(currentStats.averageWage, prevStats.averageWage)}</span>
+                    </div>
+                    <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                       <motion.div initial={{ width: 0 }} animate={{ width: '65%' }} className="h-full bg-yellow-400" />
+                    </div>
+                 </div>
+               </div>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-white rounded-lg shadow-md p-6"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Benefits & Compensation</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Health Insurance</span>
-                <span className="font-medium">87%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Retirement Plans</span>
-                <span className="font-medium">72%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Professional Development</span>
-                <span className="font-medium">65%</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-white rounded-lg shadow-md p-6"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Findings</h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li>• Steady wage growth over the decade</li>
-              <li>• Healthcare leads in compensation</li>
-              <li>• Competitive benefits packages</li>
-              <li>• Regional wage parity maintained</li>
-            </ul>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

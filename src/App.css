@@ -1,5 +1,6 @@
-/* Custom styles for the nonprofit dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
+/* Custom styles for the nonprofit dashboard */
 /* University of Michigan Upper Peninsula Branding */
 :root {
   --primary-yellow: #FFBD00;
@@ -14,8 +15,6 @@
 }
 
 /* Font imports - Futura PT and Roboto */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
-
 body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -28,16 +27,13 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--primary-yellow);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #e6a900;
 }
@@ -57,7 +53,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
-
 .btn-primary:hover {
   background-color: #e6a900;
   transform: translateY(-1px);
@@ -68,7 +63,6 @@ h1, h2, h3, h4, h5, h6 {
 .card-hover {
   transition: all 0.3s ease-in-out;
 }
-
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
@@ -78,7 +72,6 @@ h1, h2, h3, h4, h5, h6 {
 .loading-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -99,7 +92,6 @@ h1, h2, h3, h4, h5, h6 {
   .no-print {
     display: none !important;
   }
-  
   .print-break {
     page-break-before: always;
   }
@@ -110,7 +102,6 @@ h1, h2, h3, h4, h5, h6 {
   .mobile-stack {
     flex-direction: column;
   }
-  
   .mobile-full {
     width: 100%;
   }
@@ -139,7 +130,6 @@ h1, h2, h3, h4, h5, h6 {
   height: 400px;
   width: 100%;
 }
-
 .chart-container canvas {
   max-height: 100% !important;
 }
@@ -149,20 +139,16 @@ h1, h2, h3, h4, h5, h6 {
   border-collapse: collapse;
   width: 100%;
 }
-
-.data-table th,
-.data-table td {
+.data-table th, .data-table td {
   border: 1px solid #e5e7eb;
   padding: 0.75rem;
   text-align: left;
 }
-
 .data-table th {
   background-color: #f9fafb;
   font-weight: 600;
   color: #374151;
 }
-
 .data-table tbody tr:hover {
   background-color: #f9fafb;
 }
@@ -172,7 +158,6 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   display: inline-block;
 }
-
 .tooltip .tooltip-text {
   visibility: hidden;
   width: 200px;
@@ -190,7 +175,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.3s;
   font-size: 0.875rem;
 }
-
 .tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
@@ -202,28 +186,18 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.5rem;
   overflow: hidden;
 }
-
 .map-marker {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
 .map-marker:hover {
   transform: scale(1.2);
 }
 
 /* Status indicators */
-.status-positive {
-  color: #059669;
-}
-
-.status-negative {
-  color: #dc2626;
-}
-
-.status-neutral {
-  color: #6b7280;
-}
+.status-positive { color: #059669; }
+.status-negative { color: #dc2626; }
+.status-neutral { color: #6b7280; }
 
 /* Loading states */
 .skeleton {
@@ -231,21 +205,15 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
-
 @keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* Responsive utilities */
 .responsive-text {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
-
 .responsive-padding {
   padding: clamp(1rem, 4vw, 2rem);
 }
