@@ -114,7 +114,7 @@ const SectorDeepDive = () => {
                       type="bar" 
                       data={{
                         labels: topOrgs.map(o => o.name.substring(0, 15) + '...'),
-                        datasets: [{ data: topOrgs.map(o => o.wage_avg), backgroundColor: '#14364D' }]
+                        datasets: [{ data: topOrgs.map(o => o.wage_avg), backgroundColor: '#095339' }]
                       }} 
                     />
                   </div>
@@ -130,7 +130,7 @@ const SectorDeepDive = () => {
                       type="line" 
                       data={{
                         labels: topOrgs.map(o => o.name.substring(0, 15) + '...'),
-                        datasets: [{ data: topOrgs.map(o => o.employees), borderColor: '#4CC0B0', backgroundColor: 'rgba(76,192,176,0.1)' }]
+                        datasets: [{ data: topOrgs.map(o => o.employees), borderColor: '#ffc425', backgroundColor: 'rgba(255,196,37,0.12)' }]
                       }} 
                     />
                   </div>

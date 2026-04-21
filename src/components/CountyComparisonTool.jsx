@@ -69,15 +69,15 @@ const CountyComparisonTool = ({ data }) => {
           {
             value: metrics.map(m => statsA[m.key]),
             name: countyA,
-            itemStyle: { color: '#14364D' },
-            areaStyle: { opacity: 0.25, color: '#14364D' },
+            itemStyle: { color: '#095339' },
+            areaStyle: { opacity: 0.25, color: '#095339' },
             lineStyle: { width: 3 }
           },
           {
             value: metrics.map(m => statsB[m.key]),
             name: countyB,
-            itemStyle: { color: '#FFBD00' },
-            areaStyle: { opacity: 0.35, color: '#FFBD00' },
+            itemStyle: { color: '#ffc425' },
+            areaStyle: { opacity: 0.35, color: '#ffc425' },
             lineStyle: { width: 3 }
           }
         ]

@@ -17,7 +17,7 @@ const SectorGrowthInsights = () => {
     datasets: [{
       label: 'Revenue by Sector',
       data: sectorData.map(s => s.revenue),
-      backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#CFD25B', '#F79651', '#FFBD00']
+      backgroundColor: ['#095339', '#ffc425', '#0d7a53', '#ffd966', '#053726', '#e5ac00']
     }]
   };
 

@@ -31,9 +31,9 @@ const TrendingMetrics = ({ filters = {} }) => {
       { type: 'value', name: 'Wage ($)', position: 'right', axisLabel: { color: '#6B7280' } }
     ],
     series: [
-      { name: 'Orgs', type: 'line', data: trends.organizations.map(d => d.value), itemStyle: { color: '#14364D' }, lineStyle: { width: 4 }, smooth: true },
-      { name: 'Jobs', type: 'line', data: trends.employment.map(d => d.value), itemStyle: { color: '#4CC0B0' }, lineStyle: { width: 4 }, smooth: true },
-      { name: 'Avg Wage', type: 'line', yAxisIndex: 1, data: trends.wages.map(d => d.value), itemStyle: { color: '#FFBD00' }, lineStyle: { width: 4, type: 'dashed' }, smooth: true }
+      { name: 'Orgs', type: 'line', data: trends.organizations.map(d => d.value), itemStyle: { color: '#095339' }, lineStyle: { width: 4, color: '#095339' }, smooth: true },
+      { name: 'Jobs', type: 'line', data: trends.employment.map(d => d.value), itemStyle: { color: '#ffc425' }, lineStyle: { width: 4, color: '#ffc425' }, smooth: true },
+      { name: 'Avg Wage', type: 'line', yAxisIndex: 1, data: trends.wages.map(d => d.value), itemStyle: { color: '#0d7a53' }, lineStyle: { width: 4, type: 'dashed', color: '#0d7a53' }, smooth: true }
     ]
   }), [trends, filters.county, filters.sector]);
 

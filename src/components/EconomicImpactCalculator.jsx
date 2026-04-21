@@ -48,8 +48,8 @@ const EconomicImpactCalculator = () => {
       series: [{
         type: 'radar',
         data: [
-          { value: [calculations.directJobs, calculations.totalImpact, params.orgCount, 1.32], name: params.name, itemStyle: { color: '#FFBD00' }, areaStyle: { opacity: 0.3 } },
-          ...savedScenarios.map(s => ({ value: [s.directJobs, s.totalImpact, s.orgCount, 1.32], name: s.name, itemStyle: { color: '#14364D' }, areaStyle: { opacity: 0.1 } }))
+          { value: [calculations.directJobs, calculations.totalImpact, params.orgCount, 1.32], name: params.name, itemStyle: { color: '#ffc425' }, areaStyle: { opacity: 0.3 } },
+          ...savedScenarios.map(s => ({ value: [s.directJobs, s.totalImpact, s.orgCount, 1.32], name: s.name, itemStyle: { color: '#095339' }, areaStyle: { opacity: 0.15 } }))
         ]
       }]
     };

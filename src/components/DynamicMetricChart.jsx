@@ -58,11 +58,11 @@ const DynamicMetricChart = ({
           data: rawData.map(d => d.value),
           smooth: true,
           symbolSize: isScatter ? 15 : 8,
-          itemStyle: { color: '#14364D' },
+          itemStyle: { color: '#095339' },
           areaStyle: chartType === 'line' ? {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(20, 54, 77, 0.2)' },
-              { offset: 1, color: 'rgba(20, 54, 77, 0)' }
+              { offset: 0, color: 'rgba(9, 83, 57, 0.25)' },
+              { offset: 1, color: 'rgba(9, 83, 57, 0)' }
             ])
           } : undefined,
           lineStyle: { width: 4 },
@@ -73,8 +73,8 @@ const DynamicMetricChart = ({
             name: 'UP Average',
             type: 'line',
             data: benchmarks.map(b => b.upAverage),
-            lineStyle: { width: 2, type: 'dotted', color: '#FFBD00' },
-            itemStyle: { color: '#FFBD00' },
+            lineStyle: { width: 2, type: 'dotted', color: '#ffc425' },
+            itemStyle: { color: '#ffc425' },
             symbol: 'none'
           }
         ] : [])
@@ -105,12 +105,12 @@ const DynamicMetricChart = ({
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg">
-            <div className="w-2 h-2 bg-[#14364D] rounded-full" />
+            <div className="w-2 h-2 bg-[#095339] rounded-full" />
             <span className="text-[9px] font-black uppercase text-gray-500">Subject</span>
           </div>
           {showBenchmarks && (
             <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-50 rounded-lg">
-              <div className="w-2 h-2 bg-[#FFBD00] rounded-full" />
+              <div className="w-2 h-2 bg-[#ffc425] rounded-full" />
               <span className="text-[9px] font-black uppercase text-yellow-700">UP Benchmark</span>
             </div>
           )}

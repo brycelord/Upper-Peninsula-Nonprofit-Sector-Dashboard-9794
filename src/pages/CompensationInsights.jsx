@@ -68,8 +68,8 @@ const CompensationInsights = () => {
         datasets: [{
           label: 'Average Wage',
           data: trendData.map(d => d.value),
-          borderColor: '#4CC0B0',
-          backgroundColor: 'rgba(76, 192, 176, 0.1)'
+          borderColor: '#ffc425',
+          backgroundColor: 'rgba(255, 196, 37, 0.12)'
         }]
       }
     },
@@ -80,7 +80,7 @@ const CompensationInsights = () => {
         datasets: [{
           label: 'Avg Wage by Sector',
           data: sectorData.map(s => s.averageWage),
-          backgroundColor: '#14364D'
+          backgroundColor: '#095339'
         }]
       }
     }

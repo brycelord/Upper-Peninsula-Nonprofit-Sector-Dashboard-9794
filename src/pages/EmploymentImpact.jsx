@@ -69,8 +69,8 @@ const EmploymentImpact = () => {
         datasets: [{
           label: 'FTE Workforce',
           data: trendData.map(d => d.value),
-          borderColor: '#14364D',
-          backgroundColor: 'rgba(20, 54, 77, 0.1)'
+          borderColor: '#095339',
+          backgroundColor: 'rgba(9, 83, 57, 0.12)'
         }]
       }
     },
@@ -80,7 +80,7 @@ const EmploymentImpact = () => {
         labels: sectorData.map(s => s.name),
         datasets: [{
           data: sectorData.map(s => s.employment),
-          backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#CFD25B', '#F79651', '#FFBD00', '#B0B0B0']
+          backgroundColor: ['#095339', '#ffc425', '#0d7a53', '#ffd966', '#053726', '#e5ac00', '#6b7280']
         }]
       }
     },
@@ -90,7 +90,7 @@ const EmploymentImpact = () => {
         labels: countyData.map(c => c.name.split(' ')[0]),
         datasets: [{
           data: countyData.map(c => c.employment),
-          backgroundColor: '#4CC0B0'
+          backgroundColor: '#ffc425'
         }]
       }
     }

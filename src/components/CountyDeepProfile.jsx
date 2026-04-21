@@ -29,7 +29,7 @@ const CountyDeepProfile = ({ county, allCounties }) => {
         Math.round(county.organizations * 0.20),
         Math.round(county.organizations * 0.20)
       ],
-      backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#FFBD00']
+      backgroundColor: ['#095339', '#0d7a53', '#ffc425', '#ffd966']
     }]
   };
 

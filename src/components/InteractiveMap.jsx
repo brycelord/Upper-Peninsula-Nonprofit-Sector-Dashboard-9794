@@ -77,7 +77,7 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
             center={[county.lat, county.lng]}
             radius={Math.sqrt(county.organizations) * 0.8 + 5}
             pathOptions={{
-              fillColor: displaySelected === county.name ? "#FFBD00" : "#14364D",
+              fillColor: displaySelected === county.name ? "#ffc425" : "#095339",
               fillOpacity: 0.8,
               color: "#ffffff",
               weight: 2

@@ -20,7 +20,7 @@ const SectorOverview = () => {
     labels: sectorData.map(s => s.name),
     datasets: [{
       data: sectorData.map(s => s.count),
-      backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#CFD25B', '#F79651', '#FFBD00', '#B0B0B0', '#E0E0E0', '#666666', '#333333']
+      backgroundColor: ['#095339', '#ffc425', '#0d7a53', '#ffd966', '#053726', '#e5ac00', '#1f2937', '#6b7280', '#9ca3af', '#d1d5db']
     }]
   };
 
