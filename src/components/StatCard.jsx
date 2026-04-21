@@ -1,30 +1,23 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import { useViewMode } from '../context/ViewContext';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiTrendingUp, FiTrendingDown, FiMessageSquare, FiInfo, FiHelpCircle } = FiIcons;
+const { FiTrendingUp, FiTrendingDown, FiMessageSquare, FiHelpCircle } = FiIcons;
+
+const METRIC_LOGIC = {
+  'Active Nonprofits': 'This count comes from official IRS records. It includes all active charities and groups registered to help the community.',
+  'Sector Workforce': 'We estimate this by looking at the number of employees reported by each group. It shows how many neighbors work in this sector.',
+  'Annual Revenue': 'This is the total money these groups brought in through donations, grants, and services to fund their missions.',
+  'Total Assets': 'This represents the value of everything the groups own, such as buildings, equipment, and emergency savings.',
+  'Average Annual Wage': 'The typical yearly pay for someone working in a local nonprofit, compared to other jobs in Michigan.'
+};
+const DEFAULT_LOGIC = 'Key community information based on verified local records.';
 
 const StatCard = ({ title, value, change, changeType, icon, description, publicStory }) => {
   const { viewMode } = useViewMode();
-
-  const getMetricLogic = (title) => {
-    switch (title) {
-      case 'Active Nonprofits': 
-        return 'This count comes from official IRS records. It includes all active charities and groups registered to help the community.';
-      case 'Sector Workforce': 
-        return 'We estimate this by looking at the number of employees reported by each group. It shows how many neighbors work in this sector.';
-      case 'Annual Revenue': 
-        return 'This is the total money these groups brought in through donations, grants, and services to fund their missions.';
-      case 'Total Assets': 
-        return 'This represents the value of everything the groups own, such as buildings, equipment, and emergency savings.';
-      case 'Average Annual Wage': 
-        return 'The typical yearly pay for someone working in a local nonprofit, compared to other jobs in Michigan.';
-      default: 
-        return 'Key community information based on verified local records.';
-    }
-  };
+  const metricLogic = METRIC_LOGIC[title] || DEFAULT_LOGIC;
 
   return (
     <motion.div 
@@ -44,7 +37,7 @@ const StatCard = ({ title, value, change, changeType, icon, description, publicS
             <SafeIcon icon={FiHelpCircle} className="text-gray-300 hover:text-gray-900 cursor-help text-xs transition-colors" />
             <div className="absolute bottom-full right-0 mb-3 w-56 p-4 bg-gray-900 text-white text-[10px] rounded-2xl shadow-2xl opacity-0 group-hover/tooltip:opacity-100 pointer-events-none transition-all z-50 normal-case leading-relaxed font-medium transform translate-y-2 group-hover/tooltip:translate-y-0">
               <p className="font-black text-yellow-400 mb-1 uppercase tracking-widest">What this means</p>
-              {getMetricLogic(title)}
+              {metricLogic}
             </div>
           </div>
         </div>
@@ -77,4 +70,4 @@ const StatCard = ({ title, value, change, changeType, icon, description, publicS
   );
 };
 
-export default StatCard;
+export default memo(StatCard);

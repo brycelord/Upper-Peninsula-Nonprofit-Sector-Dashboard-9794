@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { memo, useMemo, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 import { useFilters } from '../context/FilterContext';
 import { COUNTIES, SECTORS } from '../services/dataService';
 
-const { FiFilter, FiChevronDown, FiChevronUp, FiX, FiCalendar, FiMapPin, FiLayers, FiSettings, FiRotateCcw } = FiIcons;
+const { FiFilter, FiCalendar, FiMapPin, FiLayers, FiSettings, FiRotateCcw } = FiIcons;
+
+const YEARS = Array.from({ length: 11 }, (_, i) => 2012 + i);
 
 const GlobalFilterHeader = () => {
-  const { filters, setFilters, resetFilters } = useFilters();
+  const { filters, updateFilters, resetFilters } = useFilters();
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const updateFilter = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-  };
+  const updateFilter = useCallback((key, value) => {
+    updateFilters({ [key]: value });
+  }, [updateFilters]);
 
-  const isActive = filters.county !== 'All' || 
-                   filters.sector !== 'All' || 
-                   filters.verifiedOnly || 
-                   filters.revenueTier !== 'All' || 
-                   filters.fteTier !== 'All';
+  const isActive = useMemo(() => (
+    filters.county !== 'All' ||
+    filters.sector !== 'All' ||
+    filters.verifiedOnly ||
+    filters.revenueTier !== 'All' ||
+    filters.fteTier !== 'All'
+  ), [filters.county, filters.sector, filters.verifiedOnly, filters.revenueTier, filters.fteTier]);
 
   return (
     <div className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-[84px] z-40 transition-all duration-300">
@@ -39,7 +43,7 @@ const GlobalFilterHeader = () => {
               onChange={(e) => updateFilter('year', parseInt(e.target.value))}
               className="bg-transparent border-none text-[10px] font-black uppercase tracking-widest outline-none cursor-pointer"
             >
-              {Array.from({ length: 11 }, (_, i) => 2012 + i).map(y => (
+              {YEARS.map(y => (
                 <option key={y} value={y}>{y} Fiscal Year</option>
               ))}
             </select>
@@ -170,4 +174,4 @@ const GlobalFilterHeader = () => {
   );
 };
 
-export default GlobalFilterHeader;
+export default memo(GlobalFilterHeader);

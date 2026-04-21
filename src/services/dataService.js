@@ -128,52 +128,82 @@ const generateHistoricalData = () => {
 
 export const RAW_NONPROFIT_DATA = generateHistoricalData();
 
+// Pre-index data by year for O(1) year lookups (eliminates 11x full scans)
+const DATA_BY_YEAR = RAW_NONPROFIT_DATA.reduce((acc, row) => {
+  if (!acc[row.year]) acc[row.year] = [];
+  acc[row.year].push(row);
+  return acc;
+}, {});
+
+// LRU-ish memoization cache keyed by serialized filters. Bounded to prevent growth.
+const AGG_CACHE = new Map();
+const AGG_CACHE_MAX = 200;
+const cacheKey = (f) => `${f.year}|${f.county}|${f.sector}|${f.revenueTier}|${f.fteTier}|${f.verifiedOnly ? 1 : 0}`;
+
 // ENHANCED AGGREGATES TO SUPPORT ALL FILTERS
 export const getAggregates = (filters = {}) => {
-  const { 
-    year = 2022, 
-    county = 'All', 
-    sector = 'All',
-    revenueTier = 'All',
-    fteTier = 'All',
-    verifiedOnly = false 
-  } = filters;
-
-  let filtered = RAW_NONPROFIT_DATA.filter(d => d.year === parseInt(year));
-
-  if (county !== 'All') filtered = filtered.filter(d => d.county === county);
-  if (sector !== 'All') filtered = filtered.filter(d => d.sector === sector);
-  if (verifiedOnly) filtered = filtered.filter(d => d.is_verified);
-
-  if (revenueTier !== 'All') {
-    filtered = filtered.filter(item => {
-      const rev = item.revenue;
-      if (revenueTier === 'Grassroots') return rev < 50000;
-      if (revenueTier === 'Small') return rev >= 50000 && rev < 250000;
-      if (revenueTier === 'Mid-Size') return rev >= 250000 && rev < 1000000;
-      if (revenueTier === 'Enterprise') return rev >= 1000000;
-      return true;
-    });
-  }
-
-  if (fteTier !== 'All') {
-    filtered = filtered.filter(item => {
-      const emp = item.employees;
-      if (fteTier === '1-5') return emp <= 5;
-      if (fteTier === '6-20') return emp > 5 && emp <= 20;
-      if (fteTier === '21-50') return emp > 20 && emp <= 50;
-      if (fteTier === '51+') return emp > 50;
-      return true;
-    });
-  }
-
-  return {
-    count: filtered.length,
-    revenue: filtered.reduce((acc, o) => acc + o.revenue, 0),
-    employment: Math.round(filtered.reduce((acc, o) => acc + o.employees, 0)),
-    averageWage: filtered.length > 0 ? filtered.reduce((acc, o) => acc + o.wage_avg, 0) / filtered.length : 0,
-    assets: filtered.reduce((acc, o) => acc + o.assets, 0)
+  const normalized = {
+    year: parseInt(filters.year ?? 2022),
+    county: filters.county ?? 'All',
+    sector: filters.sector ?? 'All',
+    revenueTier: filters.revenueTier ?? 'All',
+    fteTier: filters.fteTier ?? 'All',
+    verifiedOnly: !!filters.verifiedOnly
   };
+
+  const key = cacheKey(normalized);
+  const cached = AGG_CACHE.get(key);
+  if (cached) return cached;
+
+  const { year, county, sector, revenueTier, fteTier, verifiedOnly } = normalized;
+  const source = DATA_BY_YEAR[year] || [];
+
+  let count = 0, revenue = 0, employment = 0, wageSum = 0, assets = 0;
+
+  for (let i = 0; i < source.length; i++) {
+    const d = source[i];
+    if (county !== 'All' && d.county !== county) continue;
+    if (sector !== 'All' && d.sector !== sector) continue;
+    if (verifiedOnly && !d.is_verified) continue;
+
+    if (revenueTier !== 'All') {
+      const r = d.revenue;
+      if (revenueTier === 'Grassroots' && !(r < 50000)) continue;
+      else if (revenueTier === 'Small' && !(r >= 50000 && r < 250000)) continue;
+      else if (revenueTier === 'Mid-Size' && !(r >= 250000 && r < 1000000)) continue;
+      else if (revenueTier === 'Enterprise' && !(r >= 1000000)) continue;
+    }
+
+    if (fteTier !== 'All') {
+      const e = d.employees;
+      if (fteTier === '1-5' && !(e <= 5)) continue;
+      else if (fteTier === '6-20' && !(e > 5 && e <= 20)) continue;
+      else if (fteTier === '1-20' && !(e <= 20)) continue;
+      else if (fteTier === '21-50' && !(e > 20 && e <= 50)) continue;
+      else if (fteTier === '51+' && !(e > 50)) continue;
+    }
+
+    count++;
+    revenue += d.revenue;
+    employment += d.employees;
+    wageSum += d.wage_avg;
+    assets += d.assets;
+  }
+
+  const result = {
+    count,
+    revenue,
+    employment: Math.round(employment),
+    averageWage: count > 0 ? wageSum / count : 0,
+    assets
+  };
+
+  if (AGG_CACHE.size >= AGG_CACHE_MAX) {
+    const firstKey = AGG_CACHE.keys().next().value;
+    AGG_CACHE.delete(firstKey);
+  }
+  AGG_CACHE.set(key, result);
+  return result;
 };
 
 export const getTopOrganizations = (sector = 'All', limit = 15) => {
@@ -213,12 +243,31 @@ export const getBenchmarkTrends = (metric) => {
   });
 };
 
+const TREND_CACHE = new Map();
 export const getTrendData = (metric, county = 'All', sector = 'All') => {
+  const k = `${metric}|${county}|${sector}`;
+  const hit = TREND_CACHE.get(k);
+  if (hit) return hit;
   const years = Array.from({ length: 11 }, (_, i) => 2012 + i);
-  return years.map(y => ({
+  const result = years.map(y => ({
     year: y,
     value: getAggregates({ year: y, county, sector })[metric] || 0
   }));
+  if (TREND_CACHE.size > 100) TREND_CACHE.delete(TREND_CACHE.keys().next().value);
+  TREND_CACHE.set(k, result);
+  return result;
+};
+
+// Batched version: returns multiple metric trends in a single pass over years.
+export const getMultiTrendData = (metrics, county = 'All', sector = 'All') => {
+  const years = Array.from({ length: 11 }, (_, i) => 2012 + i);
+  const out = {};
+  metrics.forEach(m => { out[m] = []; });
+  years.forEach(y => {
+    const agg = getAggregates({ year: y, county, sector });
+    metrics.forEach(m => out[m].push({ year: y, value: agg[m] || 0 }));
+  });
+  return out;
 };
 
 export const getCountyAggregates = (year = 2022) => {

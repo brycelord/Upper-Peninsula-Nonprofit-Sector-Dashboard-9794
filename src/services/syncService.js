@@ -4,6 +4,10 @@ import { COUNTIES, SECTORS } from './dataService';
 
 const SYNC_KEY = 'up_nonprofit_v2_api_sync';
 const SESSION_SUPPRESS_KEY = 'up_dashboard_sync_suppress';
+const MIN_SYNC_INTERVAL_MS = 5000;
+
+let inFlightPromise = null;
+let lastAttempt = 0;
 
 export const syncService = {
   isSyncRequired: () => {
@@ -29,46 +33,61 @@ export const syncService = {
   },
 
   performSync: async () => {
-    console.log('🔍 Initiating ProPublica API v2 Deep Audit...');
-    
-    try {
-      // UX realism delay
-      await new Promise(resolve => setTimeout(resolve, 1800));
-      
-      const allFilings = [];
-      for (const county of COUNTIES) {
-        const countyResults = generateV2ProPublicaResults(county);
-        allFilings.push(...countyResults);
-      }
+    // Request deduplication: return in-flight promise if already syncing
+    if (inFlightPromise) return inFlightPromise;
 
-      // Batch Upsert logic
-      const CHUNK_SIZE = 400;
-      for (let i = 0; i < allFilings.length; i += CHUNK_SIZE) {
-        const chunk = allFilings.slice(i, i + CHUNK_SIZE);
-        
-        const { error } = await supabase
-          .from('propublica_cache_2024')
-          .upsert(chunk, { onConflict: 'ein,tax_period' });
-          
-        if (error) {
-          console.warn('Supabase local fallback active:', error.message);
-        }
-      }
-
-      const now = new Date().toISOString();
-      localStorage.setItem(SYNC_KEY, now);
-      localStorage.setItem(`${SYNC_KEY}_timestamp`, now);
-      sessionStorage.removeItem(SESSION_SUPPRESS_KEY); // Clear suppression on successful sync
-      
-      return { 
-        success: true, 
-        count: allFilings.length, 
-        timestamp: now 
-      };
-    } catch (error) {
-      console.error('❌ Sync Critical Error:', error);
-      return { success: false, error: error.message };
+    // Debounce: enforce minimum interval between sync attempts
+    const now = Date.now();
+    if (now - lastAttempt < MIN_SYNC_INTERVAL_MS) {
+      return { success: false, error: 'Sync throttled' };
     }
+    lastAttempt = now;
+
+    inFlightPromise = (async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1800));
+
+        const allFilings = [];
+        for (const county of COUNTIES) {
+          allFilings.push(...generateV2ProPublicaResults(county));
+        }
+
+        // Smaller chunks + parallel uploads for throughput without overload
+        const CHUNK_SIZE = 200;
+        const chunks = [];
+        for (let i = 0; i < allFilings.length; i += CHUNK_SIZE) {
+          chunks.push(allFilings.slice(i, i + CHUNK_SIZE));
+        }
+
+        // Process in batches of 3 concurrent requests to avoid rate limiting
+        const CONCURRENCY = 3;
+        for (let i = 0; i < chunks.length; i += CONCURRENCY) {
+          const batch = chunks.slice(i, i + CONCURRENCY);
+          await Promise.all(batch.map(chunk =>
+            supabase
+              .from('propublica_cache_2024')
+              .upsert(chunk, { onConflict: 'ein,tax_period' })
+              .then(({ error }) => {
+                if (error) console.warn('Supabase local fallback active:', error.message);
+              })
+          ));
+        }
+
+        const ts = new Date().toISOString();
+        localStorage.setItem(SYNC_KEY, ts);
+        localStorage.setItem(`${SYNC_KEY}_timestamp`, ts);
+        sessionStorage.removeItem(SESSION_SUPPRESS_KEY);
+
+        return { success: true, count: allFilings.length, timestamp: ts };
+      } catch (error) {
+        console.error('Sync error:', error);
+        return { success: false, error: error.message };
+      } finally {
+        inFlightPromise = null;
+      }
+    })();
+
+    return inFlightPromise;
   },
 
   getLastSyncTimestamp: () => localStorage.getItem(`${SYNC_KEY}_timestamp`)
