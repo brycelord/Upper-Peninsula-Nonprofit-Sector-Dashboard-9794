@@ -26,9 +26,9 @@ const GlobalFilterHeader = () => {
   ), [filters.county, filters.sector, filters.verifiedOnly, filters.revenueTier, filters.fteTier]);
 
   return (
-    <div className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-[84px] z-40 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex flex-wrap items-center gap-3">
+    <div className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-[72px] z-40 transition-all duration-300">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6 py-2">
+        <div className="flex flex-wrap items-center gap-2">
           {/* Context Badge */}
           <div className="flex items-center gap-2 px-3 py-2 bg-gray-900 text-yellow-400 rounded-xl mr-2 shadow-lg shadow-gray-200">
             <SafeIcon icon={FiFilter} className="text-[10px]" />
@@ -114,7 +114,7 @@ const GlobalFilterHeader = () => {
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden"
             >
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pt-6 pb-4 mt-4 border-t border-gray-100">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 pb-2 mt-2 border-t border-gray-100">
                 <div>
                   <h4 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3">Revenue Scale</h4>
                   <div className="flex flex-wrap gap-2">

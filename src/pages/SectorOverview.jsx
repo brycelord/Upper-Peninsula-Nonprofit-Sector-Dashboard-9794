@@ -25,49 +25,49 @@ const SectorOverview = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-4 md:py-6">
       <SectorGlossary isOpen={isGlossaryOpen} onClose={() => setIsGlossaryOpen(false)} />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="flex items-center justify-between mb-8">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
+
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gray-900 text-yellow-400 rounded-2xl flex items-center justify-center shadow-xl">
+            <div className="w-10 h-10 bg-gray-900 text-yellow-400 rounded-xl flex items-center justify-center shadow-md">
               <SafeIcon icon={FiPieChart} />
             </div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase">Sector Analysis</h1>
+            <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase">Sector Analysis</h1>
           </div>
-          <button 
+          <button
             onClick={() => setIsGlossaryOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl text-[10px] font-black uppercase tracking-widest border border-gray-100 shadow-sm"
+            className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg text-[10px] font-black uppercase tracking-widest border border-gray-100 shadow-sm"
           >
             <SafeIcon icon={FiHelpCircle} className="text-yellow-500" /> NTEE Glossary
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
-            <div className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
-              <h3 className="text-xl font-black uppercase tracking-tighter mb-8 italic">
+            <div className="bg-white rounded-2xl shadow-md p-4 md:p-5 border border-gray-100">
+              <h3 className="text-base font-black uppercase tracking-tighter mb-3 italic">
                 {filters.county === 'All' ? 'Regional' : filters.county} Mix (FY {filters.year})
               </h3>
               <QuickChart title="" type="pie" data={chartData} />
             </div>
           </div>
           <div className="lg:col-span-4">
-            <div className="bg-gray-900 rounded-3xl shadow-2xl p-8 text-white h-full overflow-y-auto max-h-[600px]">
-              <h3 className="text-xs font-black uppercase tracking-widest text-yellow-400 mb-6">Sector Metrics</h3>
-              <div className="space-y-6">
+            <div className="bg-gray-900 rounded-2xl shadow-lg p-4 md:p-5 text-white h-full overflow-y-auto max-h-[560px]">
+              <h3 className="text-xs font-black uppercase tracking-widest text-yellow-400 mb-3">Sector Metrics</h3>
+              <div className="space-y-3">
                 {sectorData.map((sector) => (
-                  <div key={sector.name} className="border-b border-gray-800 pb-4">
-                    <div className="flex justify-between items-end mb-2">
-                      <span className="text-sm font-bold text-gray-400">{sector.name}</span>
-                      <span className="text-lg font-black">{sector.count} <span className="text-[10px] text-gray-500 uppercase">Orgs</span></span>
+                  <div key={sector.name} className="border-b border-gray-800 pb-2">
+                    <div className="flex justify-between items-end mb-1">
+                      <span className="text-xs font-bold text-gray-400">{sector.name}</span>
+                      <span className="text-sm font-black">{sector.count} <span className="text-[9px] text-gray-500 uppercase">Orgs</span></span>
                     </div>
-                    <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }} 
-                        animate={{ width: `${(sector.count / (totalOrgs || 1)) * 100}%` }} 
-                        className="h-full bg-yellow-400" 
+                    <div className="w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(sector.count / (totalOrgs || 1)) * 100}%` }}
+                        className="h-full bg-yellow-400"
                       />
                     </div>
                   </div>

@@ -33,34 +33,34 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="flex-grow py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gray-900 text-yellow-400 rounded-3xl flex items-center justify-center shadow-2xl">
-                <SafeIcon icon={FiDatabase} className="text-xl" />
+      <div className="flex-grow py-4 md:py-6">
+        <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
+
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 bg-gray-900 text-yellow-400 rounded-2xl flex items-center justify-center shadow-lg">
+                <SafeIcon icon={FiDatabase} className="text-lg" />
               </div>
               <div>
-                <h1 className="text-5xl font-black text-gray-900 tracking-tighter italic uppercase leading-none">Regional Intelligence</h1>
-                <p className="text-gray-400 font-bold text-[11px] uppercase tracking-[0.3em] mt-2">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 tracking-tighter italic uppercase leading-none">Regional Intelligence</h1>
+                <p className="text-gray-400 font-bold text-[10px] uppercase tracking-[0.25em] mt-1">
                   Interactive Data Core — {filters.county !== 'All' ? filters.county : 'Upper Peninsula'}
                 </p>
               </div>
             </div>
-            
-            <div className="hidden lg:flex items-center gap-4 px-6 py-4 bg-white rounded-3xl border border-gray-100 shadow-sm">
-              <div className="p-2 bg-yellow-50 text-yellow-600 rounded-xl">
+
+            <div className="hidden lg:flex items-center gap-3 px-4 py-2.5 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="p-1.5 bg-yellow-50 text-yellow-600 rounded-lg">
                 <SafeIcon icon={FiTrendingUp} />
               </div>
               <div>
                 <span className="block text-[8px] font-black text-gray-400 uppercase tracking-widest">Growth Index</span>
-                <span className="text-sm font-black text-gray-900">+{calculateChange(currentStats.revenue, prevStats.revenue)} Velocity</span>
+                <span className="text-xs font-black text-gray-900">+{calculateChange(currentStats.revenue, prevStats.revenue)} Velocity</span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
             {displayStats.map((stat, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
                 <StatCard {...stat} />
@@ -68,13 +68,13 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-8 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div className="lg:col-span-8 space-y-4">
               <TrendingMetrics filters={filters} />
               <CaseStudySection selectedCounty={filters.county} />
             </div>
-            <div className="lg:col-span-4 space-y-8">
-              <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-gray-100 h-[400px]">
+            <div className="lg:col-span-4 space-y-4">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 h-80 md:h-96">
                 <InteractiveMap activeCounty={filters.county === 'All' ? 'Marquette County' : filters.county} />
               </div>
               <TrendAlerts />

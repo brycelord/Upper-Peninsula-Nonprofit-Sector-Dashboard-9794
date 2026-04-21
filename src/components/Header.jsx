@@ -23,22 +23,22 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-lg border-b-4 border-[#ffc425] sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-white shadow-sm border-b-2 border-[#ffc425] sticky top-0 z-50">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
 
-        <div className="flex justify-between items-center pt-6 pb-4">
-          <Link to="/" className="flex items-center gap-4 group">
-            <div className="relative w-12 h-12 rounded-2xl bg-[#095339] flex items-center justify-center shadow-lg shadow-green-900/20 transition-transform group-hover:scale-105">
-              <span className="font-display text-2xl font-black text-[#ffc425] tracking-tight">N</span>
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#ffc425] border-2 border-white" />
+        <div className="flex justify-between items-center pt-3 pb-2">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10 rounded-xl bg-[#095339] flex items-center justify-center shadow-md shadow-green-900/20 transition-transform group-hover:scale-105">
+              <span className="font-display text-xl font-black text-[#ffc425] tracking-tight">N</span>
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#ffc425] border-2 border-white" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#095339] leading-none tracking-tight uppercase transition-colors group-hover:text-[#0d7a53] font-display">
+              <h1 className="text-lg sm:text-xl font-black text-[#095339] leading-none tracking-tight uppercase transition-colors group-hover:text-[#0d7a53] font-display">
                 Northern Michigan University
               </h1>
-              <div className="flex items-center gap-2 mt-1.5">
-                <div className="h-[2px] w-10 bg-[#ffc425]" />
-                <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-[0.35em]">
+              <div className="flex items-center gap-2 mt-1">
+                <div className="h-[2px] w-8 bg-[#ffc425]" />
+                <p className="text-[9px] sm:text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">
                   UP Nonprofit Economic Intelligence
                 </p>
               </div>
@@ -47,20 +47,20 @@ const Header = () => {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="xl:hidden p-3 rounded-xl bg-gray-50 text-[#095339] hover:text-white hover:bg-[#095339] transition-all shadow-sm"
+            className="xl:hidden p-2 rounded-lg bg-gray-50 text-[#095339] hover:text-white hover:bg-[#095339] transition-all shadow-sm"
           >
-            <SafeIcon icon={isMenuOpen ? FiX : FiMenu} className="w-6 h-6" />
+            <SafeIcon icon={isMenuOpen ? FiX : FiMenu} className="w-5 h-5" />
           </button>
         </div>
 
-        <nav className="hidden xl:flex items-center justify-start space-x-1 py-3 border-t border-gray-50">
+        <nav className="hidden xl:flex items-center justify-start space-x-1 py-1.5 border-t border-gray-50">
           {navigationItems.map((item) => {
             const active = location.pathname === item.path;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all duration-200 ${
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all duration-200 ${
                   active
                     ? 'text-white bg-[#095339] shadow-md'
                     : 'text-gray-600 hover:text-[#095339] hover:bg-[#095339]/5'

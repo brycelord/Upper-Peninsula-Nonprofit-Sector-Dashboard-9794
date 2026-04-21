@@ -20,26 +20,26 @@ const HistoricalTrends = () => {
   }, [activeMetric, filters]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        
+    <div className="min-h-screen bg-gray-50 py-4 md:py-6">
+      <div className="max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6">
+
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-900 text-yellow-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-4">
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-gray-900 text-yellow-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">
                 <SafeIcon icon={FiCalendar} /> 2012 — 2022 Longitudinal Study
               </div>
-              <h1 className="text-5xl font-black text-gray-900 tracking-tighter italic uppercase">Historical Trends</h1>
-              <p className="text-gray-500 font-medium mt-2 max-w-xl">
-                Analyze a decade of economic evolution within the Upper Peninsula's social sector using our dynamic visualization sandbox.
+              <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter italic uppercase">Historical Trends</h1>
+              <p className="text-gray-500 font-medium text-sm mt-1 max-w-xl">
+                Analyze a decade of economic evolution within the Upper Peninsula's social sector.
               </p>
             </div>
           </div>
         </motion.div>
 
         {/* Global Selectors */}
-        <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-3xl shadow-lg border border-gray-100 mb-6">
+        <div className="flex flex-wrap items-center gap-2 bg-white p-2.5 rounded-xl shadow-md border border-gray-100 mb-3">
           <div className="flex items-center gap-2 px-4 border-r border-gray-100">
             <SafeIcon icon={FiMapPin} className="text-yellow-500" />
             <select 
@@ -75,7 +75,7 @@ const HistoricalTrends = () => {
         />
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
             <DynamicMetricChart 
               metric={activeMetric}

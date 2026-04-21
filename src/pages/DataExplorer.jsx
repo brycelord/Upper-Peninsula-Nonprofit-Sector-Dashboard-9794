@@ -117,8 +117,8 @@ const DataExplorer = () => {
   }).length;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 md:py-6">
+      <div className="max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-6">
         
         <AnimatePresence>
           {selectedOrg && (
@@ -128,12 +128,12 @@ const DataExplorer = () => {
           )}
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
           {/* Sidebar */}
-          <div className="lg:col-span-3 space-y-6">
-            <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100">
-              <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <div className="lg:col-span-3 space-y-3">
+            <div className="bg-white rounded-2xl shadow-md p-4 border border-gray-100">
+              <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                 <SafeIcon icon={FiFileText} className="text-blue-500" />
                 ProPublica Filing Type
               </h3>
@@ -165,22 +165,22 @@ const DataExplorer = () => {
           </div>
 
           {/* Main List */}
-          <div className="lg:col-span-9 space-y-6">
-            
+          <div className="lg:col-span-9 space-y-3">
+
             {/* Search Bar & Active Filters */}
-            <div className="space-y-4">
-              <div className="bg-white p-4 rounded-3xl shadow-xl border border-gray-100 flex flex-col md:flex-row items-center gap-4">
+            <div className="space-y-2">
+              <div className="bg-white p-2.5 rounded-xl shadow-md border border-gray-100 flex flex-col md:flex-row items-center gap-2">
                 <div className="flex-grow relative w-full">
-                  <SafeIcon icon={FiSearch} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
-                  <input 
-                    type="text" 
-                    placeholder="Deep search EIN, Organization Legal Name, or Form Type..." 
-                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-yellow-400 transition-all font-medium text-sm"
+                  <SafeIcon icon={FiSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base" />
+                  <input
+                    type="text"
+                    placeholder="Search EIN, Organization Name, or Form Type..."
+                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border-none rounded-lg focus:ring-2 focus:ring-yellow-400 transition-all font-medium text-sm"
                     value={searchTerm}
                     onChange={(e) => {setSearchTerm(e.target.value); setCurrentPage(1);}}
                   />
                 </div>
-                <button className="px-6 py-3 bg-gray-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-black transition-all shadow-lg">
+                <button className="px-4 py-2 bg-gray-900 text-white rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-2 hover:bg-black transition-all shadow-md">
                   <SafeIcon icon={FiDownload} />
                   Export Registry
                 </button>
@@ -225,60 +225,60 @@ const DataExplorer = () => {
               </AnimatePresence>
             </div>
 
-            <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border border-gray-100">
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-100">
                   <thead className="bg-gray-50/50">
                     <tr>
-                      <th className="px-8 py-6 text-left">
+                      <th className="px-4 py-3 text-left">
                         <SortHeader label="Organization & EIN" active={sortConfig.key === 'name'} onClick={() => handleSort('name')} />
                       </th>
-                      <th className="px-8 py-6 text-left">
+                      <th className="px-4 py-3 text-left">
                         <SortHeader label="Efficiency" active={sortConfig.key === 'program_rev'} onClick={() => handleSort('program_rev')} />
                       </th>
-                      <th className="px-8 py-6 text-left">
+                      <th className="px-4 py-3 text-left">
                         <SortHeader label="Economic Capacity" active={sortConfig.key === 'revenue'} onClick={() => handleSort('revenue')} />
                       </th>
-                      <th className="px-8 py-6 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Action</th>
+                      <th className="px-4 py-3 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
                     {paginatedData.map((item) => (
-                      <tr 
-                        key={item.ein} 
+                      <tr
+                        key={item.ein}
                         className="hover:bg-gray-50 transition-colors group cursor-pointer"
                         onClick={() => setSelectedOrg(item)}
                       >
-                        <td className="px-8 py-6">
-                          <div className="text-sm font-black text-gray-900 uppercase tracking-tight group-hover:text-blue-600 transition-colors">{item.name}</div>
-                          <div className="flex items-center gap-2 mt-1">
+                        <td className="px-4 py-3">
+                          <div className="text-xs font-black text-gray-900 uppercase tracking-tight group-hover:text-blue-600 transition-colors">{item.name}</div>
+                          <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[9px] font-bold text-gray-400 uppercase">EIN: {item.ein}</span>
                             <span className="w-1 h-1 bg-gray-300 rounded-full" />
                             <span className="text-[9px] font-bold text-gray-400 uppercase">{item.county} County</span>
                           </div>
                         </td>
-                        <td className="px-8 py-6">
+                        <td className="px-4 py-3">
                           <div className="flex flex-col">
-                            <span className="text-sm font-black text-gray-900">
+                            <span className="text-xs font-black text-gray-900">
                               {((item.program_rev / item.revenue) * 100).toFixed(0)}% ROI
                             </span>
                             <div className="w-16 h-1 bg-gray-100 rounded-full mt-1 overflow-hidden">
-                              <div 
+                              <div
                                 className={`h-full ${item.program_rev/item.revenue > 0.8 ? 'bg-green-500' : 'bg-yellow-400'}`}
                                 style={{ width: `${(item.program_rev / item.revenue) * 100}%` }}
                               />
                             </div>
                           </div>
                         </td>
-                        <td className="px-8 py-6">
+                        <td className="px-4 py-3">
                           <div className="flex flex-col">
-                            <span className="text-sm font-black text-gray-900">${(item.revenue / 1e6).toFixed(2)}M Rev</span>
+                            <span className="text-xs font-black text-gray-900">${(item.revenue / 1e6).toFixed(2)}M Rev</span>
                             <span className="text-[9px] font-bold text-teal-600 uppercase tracking-widest">{item.employees} Personnel</span>
                           </div>
                         </td>
-                        <td className="px-8 py-6 text-right">
-                          <button 
-                            className="p-3 bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-yellow-400 rounded-2xl transition-all"
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            className="p-2 bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-yellow-400 rounded-lg transition-all"
                             onClick={(e) => {e.stopPropagation(); setSelectedOrg(item);}}
                           >
                             <SafeIcon icon={FiEye} />
@@ -291,23 +291,23 @@ const DataExplorer = () => {
               </div>
 
               {/* Pagination */}
-              <div className="p-8 bg-gray-50/50 border-t border-gray-50 flex items-center justify-between">
+              <div className="px-4 py-3 bg-gray-50/50 border-t border-gray-50 flex items-center justify-between">
                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
                   Showing {(currentPage - 1) * itemsPerPage + 1} — {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} Records
                 </span>
-                <div className="flex items-center gap-4">
-                  <button 
+                <div className="flex items-center gap-3">
+                  <button
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage(p => p - 1)}
-                    className="p-3 bg-white rounded-xl shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
+                    className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
                   >
                     <SafeIcon icon={FiChevronLeft} />
                   </button>
                   <span className="text-xs font-black italic">{currentPage} / {totalPages}</span>
-                  <button 
+                  <button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(p => p + 1)}
-                    className="p-3 bg-white rounded-xl shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
+                    className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 disabled:opacity-50 hover:bg-gray-900 hover:text-white transition-all"
                   >
                     <SafeIcon icon={FiChevronRight} />
                   </button>

@@ -97,16 +97,16 @@ const EmploymentImpact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <h1 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase mb-2">Workforce Impact</h1>
+    <div className="min-h-screen bg-gray-50 py-4 md:py-6">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
+        <div className="mb-4">
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase mb-1">Workforce Impact</h1>
           <p className="text-gray-500 font-bold text-[10px] uppercase tracking-widest">
             {filters.county} • {filters.sector} • FY {filters.year} Analysis
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
           {employmentStats.map((stat, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
               <StatCard {...stat} />
@@ -114,16 +114,16 @@ const EmploymentImpact = () => {
           ))}
         </div>
 
-        <div className="bg-white rounded-[40px] shadow-2xl p-10 border border-gray-100">
-          <div className="flex flex-wrap items-center justify-between gap-6 mb-10">
-            <h3 className="text-xl font-black uppercase italic tracking-tighter">Workforce Distribution</h3>
-            <div className="flex bg-gray-100 p-1.5 rounded-2xl gap-2">
+        <div className="bg-white rounded-2xl shadow-md p-4 md:p-5 border border-gray-100">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h3 className="text-base md:text-lg font-black uppercase italic tracking-tighter">Workforce Distribution</h3>
+            <div className="flex bg-gray-100 p-1 rounded-xl gap-1">
               {['trends', 'sectors', 'counties'].map(v => (
                 <button
                   key={v}
                   onClick={() => setSelectedMetric(v)}
-                  className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                    selectedMetric === v ? 'bg-white text-gray-900 shadow-md' : 'text-gray-400 hover:text-gray-600'
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
+                    selectedMetric === v ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
                   {v}
@@ -131,7 +131,7 @@ const EmploymentImpact = () => {
               ))}
             </div>
           </div>
-          <div className="h-[400px]">
+          <div className="h-72 md:h-80 lg:h-96">
             <QuickChart title="" type={charts[selectedMetric].type} data={charts[selectedMetric].data} />
           </div>
         </div>

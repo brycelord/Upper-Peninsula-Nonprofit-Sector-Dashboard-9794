@@ -57,8 +57,8 @@ const TrendingMetrics = ({ filters = {} }) => {
   }, [option]);
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-      <div ref={chartRef} style={{ height: '400px' }} />
+    <div className="bg-white rounded-2xl shadow-md p-3 md:p-4 border border-gray-100">
+      <div ref={chartRef} className="h-72 md:h-80 lg:h-96" />
     </div>
   );
 };

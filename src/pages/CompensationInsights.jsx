@@ -87,16 +87,16 @@ const CompensationInsights = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <h1 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase mb-2">Compensation Intelligence</h1>
+    <div className="min-h-screen bg-gray-50 py-4 md:py-6">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
+        <div className="mb-4">
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase mb-1">Compensation Intelligence</h1>
           <p className="text-gray-500 font-bold text-[10px] uppercase tracking-widest">
             {filters.county} • {filters.sector} • FY {filters.year} Wage Data
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
           {compensationStats.map((stat, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}>
               <StatCard {...stat} />
@@ -104,47 +104,47 @@ const CompensationInsights = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
-            <div className="bg-white rounded-[40px] shadow-2xl p-10 border border-gray-100">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-xl font-black uppercase italic tracking-tighter">Wage Longitudinal Study</h3>
-                <div className="flex bg-gray-50 p-1 rounded-xl">
-                  <button 
+            <div className="bg-white rounded-2xl shadow-md p-4 md:p-5 border border-gray-100">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base md:text-lg font-black uppercase italic tracking-tighter">Wage Longitudinal Study</h3>
+                <div className="flex bg-gray-50 p-0.5 rounded-lg">
+                  <button
                     onClick={() => setSelectedView('trends')}
-                    className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase transition-all ${selectedView === 'trends' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
+                    className={`px-3 py-1.5 rounded-md text-[9px] font-black uppercase transition-all ${selectedView === 'trends' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
                   >
                     Trends
                   </button>
-                  <button 
+                  <button
                     onClick={() => setSelectedView('sectors')}
-                    className={`px-4 py-2 rounded-lg text-[9px] font-black uppercase transition-all ${selectedView === 'sectors' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
+                    className={`px-3 py-1.5 rounded-md text-[9px] font-black uppercase transition-all ${selectedView === 'sectors' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-400'}`}
                   >
                     By Sector
                   </button>
                 </div>
               </div>
-              <div className="h-[400px]">
+              <div className="h-72 md:h-80 lg:h-96">
                 <QuickChart title="" type={charts[selectedView].type} data={charts[selectedView].data} />
               </div>
             </div>
           </div>
           <div className="lg:col-span-4">
-            <div className="bg-gray-900 rounded-[40px] p-8 text-white h-full shadow-2xl relative overflow-hidden">
-               <div className="absolute top-0 right-0 p-8 opacity-5">
-                 <SafeIcon icon={FiPieChart} className="text-[160px]" />
+            <div className="bg-gray-900 rounded-2xl p-4 md:p-5 text-white h-full shadow-lg relative overflow-hidden">
+               <div className="absolute top-0 right-0 p-5 opacity-5">
+                 <SafeIcon icon={FiPieChart} className="text-[120px]" />
                </div>
-               <h3 className="text-xs font-black uppercase tracking-widest text-yellow-400 mb-6">Regional Analysis</h3>
-               <div className="space-y-6 relative z-10">
-                 <p className="text-sm text-gray-400 italic leading-relaxed">
-                   "Nonprofit compensation in <b>{filters.county}</b> currently tracks at <b>91.4%</b> of the state urban median, reflecting regional cost-of-living variances while maintaining competitive local recruitment power."
+               <h3 className="text-xs font-black uppercase tracking-widest text-yellow-400 mb-3">Regional Analysis</h3>
+               <div className="space-y-3 relative z-10">
+                 <p className="text-xs text-gray-400 italic leading-relaxed">
+                   "Nonprofit compensation in <b>{filters.county}</b> currently tracks at <b>91.4%</b> of the state urban median."
                  </p>
-                 <div className="pt-6 border-t border-gray-800">
-                    <div className="flex justify-between items-end mb-2">
+                 <div className="pt-3 border-t border-gray-800">
+                    <div className="flex justify-between items-end mb-1.5">
                        <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Growth Velocity</span>
-                       <span className="text-lg font-black">{calculateChange(currentStats.averageWage, prevStats.averageWage)}</span>
+                       <span className="text-base font-black">{calculateChange(currentStats.averageWage, prevStats.averageWage)}</span>
                     </div>
-                    <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-gray-800 h-1 rounded-full overflow-hidden">
                        <motion.div initial={{ width: 0 }} animate={{ width: '65%' }} className="h-full bg-yellow-400" />
                     </div>
                  </div>
