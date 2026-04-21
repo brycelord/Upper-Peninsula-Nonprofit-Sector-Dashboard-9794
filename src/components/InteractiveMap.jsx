@@ -58,7 +58,7 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
   };
 
   return (
-    <div className="relative w-full h-full rounded-b-2xl overflow-hidden group">
+    <div className="relative w-full h-full rounded-b-2xl overflow-hidden group isolate z-0">
       <MapContainer 
         center={center} 
         zoom={7} 
@@ -106,7 +106,7 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
           </CircleMarker>
         ))}
       </MapContainer>
-      <div className="absolute top-4 left-4 z-[1000] pointer-events-none">
+      <div className="absolute top-4 left-4 z-[400] pointer-events-none">
         <div className="bg-white/90 backdrop-blur-md p-3 rounded-xl border border-gray-200 shadow-xl pointer-events-auto">
           <div className="flex items-center gap-2 text-xs font-black uppercase tracking-tight text-gray-900">
             <SafeIcon icon={FiMapPin} className="text-yellow-500" />
