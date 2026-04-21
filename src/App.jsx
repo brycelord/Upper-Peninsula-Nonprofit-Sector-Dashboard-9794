@@ -32,8 +32,10 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Header />
-        <GlobalFilterHeader />
+        <div className="sticky top-0 z-50">
+          <Header />
+          <GlobalFilterHeader />
+        </div>
 
         <main className="flex-grow">
           <Suspense fallback={<RouteFallback />}>

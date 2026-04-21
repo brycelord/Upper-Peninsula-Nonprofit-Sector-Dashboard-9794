@@ -54,7 +54,7 @@ const GlobalFilterHeader = () => {
   }, [filters.county, filters.sector, filters.verifiedOnly, filters.revenueTier, filters.fteTier]);
 
   return (
-    <div className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm sticky top-[72px] z-40">
+    <div className="w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6 py-2.5">
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-2 pl-2 pr-3 h-10 rounded-full bg-[#095339] text-[#ffc425] shadow-md mr-1">
