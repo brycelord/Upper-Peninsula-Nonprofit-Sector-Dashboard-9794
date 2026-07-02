@@ -47,7 +47,7 @@ export default {
       },
       fontFamily: {
         sans: ['Outfit', 'Cera Pro', 'Cera', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        display: ['Outfit', 'Cera Pro', 'Cera', 'sans-serif'],
+        display: ['Barlow Condensed', 'Outfit', 'Cera Pro', 'Cera', 'sans-serif'],
         heritage: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       keyframes: {

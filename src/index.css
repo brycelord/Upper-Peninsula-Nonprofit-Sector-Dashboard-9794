@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -28,7 +28,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', 'Cera Pro', 'Cera', sans-serif;
+  font-family: 'Barlow Condensed', 'Outfit', 'Cera Pro', 'Cera', sans-serif;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }

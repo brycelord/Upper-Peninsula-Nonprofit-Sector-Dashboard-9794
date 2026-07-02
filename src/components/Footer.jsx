@@ -1,78 +1,93 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiMail, FiExternalLink, FiDatabase } = FiIcons;
+const { FiMail, FiPhone, FiExternalLink, FiDatabase, FiMapPin } = FiIcons;
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* About Section */}
-          <div className="col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
-                <span className="text-black font-bold">UP</span>
-              </div>
-              <h3 className="text-lg font-bold" style={{ fontFamily: 'futura-pt, sans-serif' }}>
-                Michigan Upper Peninsula Nonprofit Dashboard
-              </h3>
+    <footer className="bg-[#095339] text-white">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+
+          <div className="md:col-span-4">
+            <div className="flex items-start gap-4 mb-4">
+              <img
+                src="/assets/images/NMU_Stack_Transparent.png"
+                alt="Northern Michigan University"
+                className="h-16 w-auto brightness-0 invert"
+              />
             </div>
-            <p className="text-gray-300 mb-4">
-              A comprehensive platform analyzing the nonprofit sector's economic impact, 
-              employment trends, and organizational landscape across Michigan's Upper Peninsula from 2013-2022.
+            <div className="w-10 h-[3px] bg-[#ffc425] mb-3" />
+            <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#ffc425] mb-2">
+              UP Nonprofit Economic Intelligence
             </p>
-            <div className="flex items-center space-x-2 text-sm text-gray-400">
-              <SafeIcon icon={FiDatabase} className="w-4 h-4" />
-              <span>Data updated annually | Last update: 2023</span>
+            <p className="text-sm text-white/75 leading-relaxed">
+              A research platform analyzing the nonprofit sector's economic impact, employment trends,
+              and organizational landscape across Michigan's 15 Upper Peninsula counties.
+            </p>
+            <div className="flex items-center gap-2 mt-3 text-xs text-white/50 font-medium">
+              <SafeIcon icon={FiDatabase} className="w-3.5 h-3.5 shrink-0" />
+              <span>Data updated annually · Last update: 2023</span>
             </div>
           </div>
 
-          {/* Data Sources */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-yellow-400">Data Sources</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li className="flex items-center space-x-2">
-                <SafeIcon icon={FiExternalLink} className="w-3 h-3" />
-                <span className="text-sm">ProPublica Nonprofit Explorer</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <SafeIcon icon={FiExternalLink} className="w-3 h-3" />
-                <span className="text-sm">QCEW Employment Data</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <SafeIcon icon={FiExternalLink} className="w-3 h-3" />
-                <span className="text-sm">IRS Business Master File</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <SafeIcon icon={FiExternalLink} className="w-3 h-3" />
-                <span className="text-sm">Michigan Geographic Data</span>
-              </li>
+          <div className="md:col-span-3 md:col-start-6">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#ffc425] mb-4 border-b border-white/10 pb-2">
+              Data Sources
+            </h4>
+            <ul className="space-y-2.5 text-white/70">
+              {[
+                'ProPublica Nonprofit Explorer',
+                'QCEW Employment Data',
+                'IRS Business Master File',
+                'Michigan Geographic Data Library',
+              ].map((src) => (
+                <li key={src} className="flex items-center gap-2 text-sm hover:text-[#ffc425] transition-colors">
+                  <SafeIcon icon={FiExternalLink} className="w-3 h-3 shrink-0" />
+                  <span>{src}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-yellow-400">Contact</h4>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2 text-gray-300">
-                <SafeIcon icon={FiMail} className="w-4 h-4" />
-                <span className="text-sm">research@nmu.edu</span>
+          <div className="md:col-span-3 md:col-start-10">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.25em] text-[#ffc425] mb-4 border-b border-white/10 pb-2">
+              Contact
+            </h4>
+            <div className="space-y-3 text-white/70 text-sm">
+              <div className="flex items-start gap-2">
+                <SafeIcon icon={FiMapPin} className="w-4 h-4 shrink-0 mt-0.5 text-[#ffc425]" />
+                <address className="not-italic leading-relaxed">
+                  Northern Michigan University<br />
+                  1401 Presque Isle Avenue<br />
+                  Marquette, MI 49855
+                </address>
               </div>
-              <p className="text-xs text-gray-400">
-                University of Michigan - Upper Peninsula<br />
-                Research & Analytics Department
-              </p>
+              <div className="flex items-center gap-2">
+                <SafeIcon icon={FiMail} className="w-4 h-4 shrink-0 text-[#ffc425]" />
+                <span>research@nmu.edu</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <SafeIcon icon={FiPhone} className="w-4 h-4 shrink-0 text-[#ffc425]" />
+                <span>906-227-1000</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
-            © 2024 University of Michigan - Upper Peninsula. All rights reserved. | 
+        <div className="border-t border-[#ffc425]/30 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/50 text-center sm:text-left">
+            &copy; {new Date().getFullYear()} Northern Michigan University. All rights reserved.
             Data visualization for research and public policy purposes.
           </p>
+          <img
+            src="/assets/images/NMU_Stack_Transparent.png"
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-auto opacity-20 brightness-0 invert"
+          />
         </div>
       </div>
     </footer>
