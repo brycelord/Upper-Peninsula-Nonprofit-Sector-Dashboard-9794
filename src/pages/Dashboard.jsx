@@ -42,7 +42,7 @@ const Dashboard = () => {
                 <SafeIcon icon={FiDatabase} className="text-lg" />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 tracking-tighter italic uppercase leading-none">Regional Intelligence</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-gray-900 tracking-tighter uppercase leading-none">Regional Intelligence</h1>
                 <p className="text-gray-400 font-bold text-[10px] uppercase tracking-[0.25em] mt-1">
                   Interactive Data Core — {filters.county !== 'All' ? filters.county : 'Upper Peninsula'}
                 </p>

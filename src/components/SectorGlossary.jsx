@@ -38,7 +38,7 @@ const SectorGlossary = ({ isOpen, onClose }) => {
               <SafeIcon icon={FiHelpCircle} />
             </div>
             <div>
-              <h3 className="text-xl font-black uppercase tracking-tighter italic">NTEE Category Guide</h3>
+              <h3 className="text-xl font-black uppercase tracking-tighter">NTEE Category Guide</h3>
               <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Standardized Sector Definitions</p>
             </div>
           </div>

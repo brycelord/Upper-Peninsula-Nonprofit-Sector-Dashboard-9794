@@ -46,7 +46,7 @@ const StatCard = ({ title, value, change, changeType, icon, description, publicS
       <div className="space-y-0.5">
         <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{title}</h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase">
+          <span className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter uppercase">
             {value}
           </span>
         </div>
@@ -60,7 +60,7 @@ const StatCard = ({ title, value, change, changeType, icon, description, publicS
         ) : (
           <div className="flex items-start gap-2">
             <SafeIcon icon={FiMessageSquare} className="text-yellow-500 mt-1 shrink-0" />
-            <p className="text-[11px] text-gray-900 font-black italic uppercase leading-tight tracking-tight">
+            <p className="text-[11px] text-gray-900 font-black uppercase leading-tight tracking-tight">
               {publicStory || description}
             </p>
           </div>

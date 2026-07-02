@@ -56,7 +56,7 @@ const CountyEconomicSummary = ({ county, allCounties }) => {
             <SafeIcon icon={FiTrendingUp} />
           </div>
           <div>
-            <h3 className="text-xl font-black uppercase italic tracking-tighter" style={{ fontFamily: 'futura-pt, sans-serif' }}>
+            <h3 className="text-xl font-black uppercase tracking-tighter" style={{ fontFamily: 'futura-pt, sans-serif' }}>
               Impact Summary: {county.name}
             </h3>
             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Economic Contribution Profile</p>

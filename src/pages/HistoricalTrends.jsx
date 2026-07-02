@@ -30,7 +30,7 @@ const HistoricalTrends = () => {
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-gray-900 text-yellow-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">
                 <SafeIcon icon={FiCalendar} /> 2012 — 2022 Longitudinal Study
               </div>
-              <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter italic uppercase">Historical Trends</h1>
+              <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter uppercase">Historical Trends</h1>
               <p className="text-gray-500 font-medium text-sm mt-1 max-w-xl">
                 Analyze a decade of economic evolution within the Upper Peninsula's social sector.
               </p>

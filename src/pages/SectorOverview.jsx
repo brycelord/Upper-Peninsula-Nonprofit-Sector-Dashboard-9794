@@ -34,7 +34,7 @@ const SectorOverview = () => {
             <div className="w-10 h-10 bg-gray-900 text-yellow-400 rounded-xl flex items-center justify-center shadow-md">
               <SafeIcon icon={FiPieChart} />
             </div>
-            <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase">Sector Analysis</h1>
+            <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter uppercase">Sector Analysis</h1>
           </div>
           <button
             onClick={() => setIsGlossaryOpen(true)}
@@ -47,7 +47,7 @@ const SectorOverview = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div className="lg:col-span-8">
             <div className="bg-white rounded-2xl shadow-md p-4 md:p-5 border border-gray-100">
-              <h3 className="text-base font-black uppercase tracking-tighter mb-3 italic">
+              <h3 className="text-base font-black uppercase tracking-tighter mb-3">
                 {filters.county === 'All' ? 'Regional' : filters.county} Mix (FY {filters.year})
               </h3>
               <QuickChart title="" type="pie" data={chartData} />

@@ -99,7 +99,7 @@ const EconomicImpactCalculator = () => {
     <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
       <div className="p-5 md:p-6 bg-gray-900 text-white flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter">Community Impact Predictor</h2>
+          <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter">Community Impact Predictor</h2>
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Simulate sector growth and ripple effects</p>
         </div>
         <div className="flex items-center gap-2">

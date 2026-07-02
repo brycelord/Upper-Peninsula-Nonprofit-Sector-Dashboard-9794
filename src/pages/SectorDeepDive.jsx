@@ -49,7 +49,7 @@ const SectorDeepDive = () => {
               <div className="bg-white rounded-2xl p-4 md:p-5 shadow-md border border-gray-100">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter italic uppercase">{selectedSector}</h1>
+                    <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter uppercase">{selectedSector}</h1>
                     <p className="text-gray-500 font-bold uppercase tracking-widest text-[10px] mt-1">Verified Sector Intelligence v3.0</p>
                   </div>
                   <div className="p-2.5 bg-yellow-400 text-black rounded-xl shadow-md">

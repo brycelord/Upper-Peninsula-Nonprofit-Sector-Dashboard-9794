@@ -96,7 +96,7 @@ const DynamicMetricChart = ({
     <div className="w-full bg-white rounded-[32px] p-8 shadow-2xl border border-gray-100">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="text-xl font-black uppercase italic tracking-tighter text-gray-900">
+          <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">
             {metric.replace(/([A-Z])/g, ' $1')} Velocity
           </h3>
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">

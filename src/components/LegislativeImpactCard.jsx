@@ -18,7 +18,7 @@ const LegislativeImpactCard = ({ data, type }) => {
             <SafeIcon icon={FiMap} />
           </div>
           <div>
-            <h3 className="text-xl font-black uppercase italic tracking-tighter leading-none">{data.name} District</h3>
+            <h3 className="text-xl font-black uppercase tracking-tighter leading-none">{data.name} District</h3>
             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">MI {type === 'house' ? 'House of Reps' : 'State Senate'}</p>
           </div>
         </div>

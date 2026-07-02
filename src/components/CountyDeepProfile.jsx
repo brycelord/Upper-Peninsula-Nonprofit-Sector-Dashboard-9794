@@ -47,10 +47,10 @@ const CountyDeepProfile = ({ county, allCounties }) => {
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center text-black shadow-lg">
-                <span className="text-2xl font-black italic">{county.name.substring(0, 2).toUpperCase()}</span>
+                <span className="text-2xl font-black">{county.name.substring(0, 2).toUpperCase()}</span>
               </div>
               <div>
-                <h2 className="text-4xl font-black uppercase tracking-tighter italic" style={{ fontFamily: 'futura-pt, sans-serif' }}>
+                <h2 className="text-4xl font-black uppercase tracking-tighter" style={{ fontFamily: 'futura-pt, sans-serif' }}>
                   {county.name}
                 </h2>
                 <div className="flex items-center gap-3 mt-1">

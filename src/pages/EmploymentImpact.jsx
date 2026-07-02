@@ -100,7 +100,7 @@ const EmploymentImpact = () => {
     <div className="min-h-screen bg-gray-50 py-4 md:py-6">
       <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6">
         <div className="mb-4">
-          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase mb-1">Workforce Impact</h1>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter uppercase mb-1">Workforce Impact</h1>
           <p className="text-gray-500 font-bold text-[10px] uppercase tracking-widest">
             {filters.county} • {filters.sector} • FY {filters.year} Analysis
           </p>
@@ -116,7 +116,7 @@ const EmploymentImpact = () => {
 
         <div className="bg-white rounded-2xl shadow-md p-4 md:p-5 border border-gray-100">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <h3 className="text-base md:text-lg font-black uppercase italic tracking-tighter">Workforce Distribution</h3>
+            <h3 className="text-base md:text-lg font-black uppercase tracking-tighter">Workforce Distribution</h3>
             <div className="flex bg-gray-100 p-1 rounded-xl gap-1">
               {['trends', 'sectors', 'counties'].map(v => (
                 <button

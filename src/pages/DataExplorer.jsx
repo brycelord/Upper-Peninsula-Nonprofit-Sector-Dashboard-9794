@@ -303,7 +303,7 @@ const DataExplorer = () => {
                   >
                     <SafeIcon icon={FiChevronLeft} />
                   </button>
-                  <span className="text-xs font-black italic">{currentPage} / {totalPages}</span>
+                  <span className="text-xs font-black">{currentPage} / {totalPages}</span>
                   <button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage(p => p + 1)}

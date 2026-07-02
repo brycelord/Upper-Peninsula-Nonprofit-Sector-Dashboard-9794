@@ -78,7 +78,7 @@ const TrajectoryEngine = ({ data, metric }) => {
                 logic="This shows how much the sector grew on average each year over the last decade."
               />
               <div className="flex items-center gap-2">
-                <span className="text-4xl font-black italic text-white">
+                <span className="text-4xl font-black text-white">
                   {analysis.cagr >= 0 ? '+' : ''}{analysis.cagr.toFixed(1)}%
                 </span>
                 <SafeIcon icon={analysis.cagr >= 0 ? FiTrendingUp : FiTrendingDown} className={analysis.cagr >= 0 ? 'text-green-400' : 'text-red-400'} />
@@ -117,7 +117,7 @@ const TrajectoryEngine = ({ data, metric }) => {
         />
         <div className="flex items-end justify-between mb-4">
           <div>
-            <div className="text-3xl font-black text-gray-900 tracking-tighter italic">
+            <div className="text-3xl font-black text-gray-900 tracking-tighter">
               {formatValue(analysis.projection2027)}
             </div>
           </div>

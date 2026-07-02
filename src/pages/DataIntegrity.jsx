@@ -63,7 +63,7 @@ const DataIntegrity = () => {
               <div className="inline-flex items-center gap-2 px-3 py-0.5 bg-yellow-400 text-black rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
                 <SafeIcon icon={FiCpu} /> Advanced Audit Logic Engaged
               </div>
-              <h1 className="text-3xl md:text-4xl font-black tracking-tighter italic uppercase mb-1.5 leading-none">
+              <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase mb-1.5 leading-none">
                 Data Integrity <span className="text-yellow-400">Report Card</span>
               </h1>
               <p className="text-gray-400 font-medium text-sm leading-relaxed">
@@ -73,7 +73,7 @@ const DataIntegrity = () => {
 
             <div className="relative z-10 text-center bg-white/5 backdrop-blur-xl p-4 md:p-5 rounded-2xl border border-white/10 min-w-[200px]">
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-yellow-400 mb-1">Aggregate Confidence</div>
-              <div className="text-4xl md:text-5xl font-black italic tracking-tighter">{overallConfidence}%</div>
+              <div className="text-4xl md:text-5xl font-black tracking-tighter">{overallConfidence}%</div>
               <div className="mt-2 flex items-center justify-center gap-2 text-green-400 font-bold uppercase text-[10px]">
                 <SafeIcon icon={FiCheck} /> Grade: A+ (Verified)
               </div>
@@ -92,7 +92,7 @@ const DataIntegrity = () => {
         <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
             <div>
-              <h2 className="text-base md:text-lg font-black uppercase italic tracking-tighter">Regional Reliability Matrix</h2>
+              <h2 className="text-base md:text-lg font-black uppercase tracking-tighter">Regional Reliability Matrix</h2>
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">Confidence Score by County Jurisdiction</p>
             </div>
             <button className="p-2 bg-gray-900 text-white rounded-lg hover:bg-black transition-all">
@@ -119,7 +119,7 @@ const DataIntegrity = () => {
                     </td>
                     <td className="px-4 py-2.5">
                       <div className="flex items-center justify-center gap-3">
-                        <div className="text-sm font-black italic">{(county.confidence * 100).toFixed(0)}%</div>
+                        <div className="text-sm font-black">{(county.confidence * 100).toFixed(0)}%</div>
                         <div className="flex-grow max-w-[100px] h-1 bg-gray-100 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}

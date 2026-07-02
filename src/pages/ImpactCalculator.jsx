@@ -53,7 +53,7 @@ const ImpactCalculator = () => {
             <SafeIcon icon={FiGlobe} className="text-yellow-400" />
             Strategic Planning Tool
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter italic uppercase mb-2">
+          <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter uppercase mb-2">
             Economic Impact Calculator
           </h1>
           <p className="text-gray-500 font-medium text-sm max-w-2xl mx-auto">
@@ -67,7 +67,7 @@ const ImpactCalculator = () => {
               <div className="w-8 h-8 rounded-lg bg-[#095339] text-[#ffc425] flex items-center justify-center shrink-0">
                 <SafeIcon icon={FiBookOpen} className="text-sm" />
               </div>
-              <h2 className="text-lg font-black uppercase italic tracking-tighter text-gray-900">What This Tool Does</h2>
+              <h2 className="text-lg font-black uppercase tracking-tighter text-gray-900">What This Tool Does</h2>
             </div>
             <p className="text-sm text-gray-600 font-medium leading-relaxed">
               This calculator translates nonprofit sector assumptions into projected economic output for the Upper Peninsula.
@@ -88,7 +88,7 @@ const ImpactCalculator = () => {
               <div className="w-8 h-8 rounded-lg bg-[#ffc425] text-[#095339] flex items-center justify-center shrink-0">
                 <SafeIcon icon={FiAlertCircle} className="text-sm" />
               </div>
-              <h2 className="text-lg font-black uppercase italic tracking-tighter">Before You Start</h2>
+              <h2 className="text-lg font-black uppercase tracking-tighter">Before You Start</h2>
             </div>
             <ul className="space-y-2 text-[11px] font-medium leading-relaxed">
               <li className="flex gap-2"><span className="text-[#ffc425] font-black">01.</span> Results are projections, not audited figures. Use them for directional planning.</li>
@@ -186,7 +186,7 @@ const ImpactCalculator = () => {
         </div>
 
         <div className="mt-6 p-4 bg-[#ffc425]/10 border border-[#ffc425]/40 rounded-2xl text-center">
-          <p className="text-[11px] font-black uppercase tracking-widest text-[#095339] italic">
+          <p className="text-[11px] font-black uppercase tracking-widest text-[#095339]">
             Tip: pair this tool with the Advocacy Portal to export findings into briefing materials for policymakers.
           </p>
         </div>

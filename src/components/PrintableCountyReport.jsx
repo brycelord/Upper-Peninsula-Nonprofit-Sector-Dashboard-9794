@@ -25,7 +25,7 @@ const PrintableCountyReport = ({ county }) => {
       <div className="hidden print:block fixed inset-0 bg-white z-[9999] p-12 text-black overflow-y-auto">
         <div className="border-b-4 border-yellow-400 pb-8 mb-12 flex justify-between items-end">
           <div>
-            <h1 className="text-5xl font-black uppercase italic tracking-tighter mb-2">County Economic Summary</h1>
+            <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">County Economic Summary</h1>
             <p className="text-sm font-bold text-gray-500 uppercase tracking-widest">Report Generated: {new Date().toLocaleDateString()}</p>
           </div>
           <div className="text-right">

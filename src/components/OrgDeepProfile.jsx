@@ -32,7 +32,7 @@ const OrgDeepProfile = ({ org, onClose }) => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-black uppercase tracking-tighter italic">EIN: {org.ein}</h2>
+              <h2 className="text-lg font-black uppercase tracking-tighter">EIN: {org.ein}</h2>
               <button onClick={copyEin} className="p-1 hover:bg-white/20 rounded-md transition-colors" title="Copy EIN">
                 <SafeIcon icon={FiCopy} className="text-[10px]" />
               </button>
@@ -56,11 +56,11 @@ const OrgDeepProfile = ({ org, onClose }) => {
             </span>
             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">In {org.county} County</span>
           </div>
-          <h1 className="text-3xl font-black text-gray-900 uppercase tracking-tighter italic mb-4 leading-[0.95]">
+          <h1 className="text-3xl font-black text-gray-900 uppercase tracking-tighter mb-4 leading-[0.95]">
             {org.name}
           </h1>
           <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase rounded-full border border-blue-100 italic">
+            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase rounded-full border border-blue-100">
               Form {org.filing_type}
             </span>
             <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[10px] font-black uppercase rounded-full border border-teal-100">
@@ -106,12 +106,12 @@ const OrgDeepProfile = ({ org, onClose }) => {
           <div className="grid grid-cols-2 gap-8 relative z-10">
             <div>
               <div className="text-[9px] font-black text-gray-400 uppercase mb-2">Program Efficiency</div>
-              <div className="text-3xl font-black italic">{(100 - overheadRatio)}%</div>
+              <div className="text-3xl font-black">{(100 - overheadRatio)}%</div>
               <p className="text-[8px] text-gray-500 mt-1 uppercase font-bold">Direct Service Allocation</p>
             </div>
             <div>
               <div className="text-[9px] font-black text-gray-400 uppercase mb-2">Liability Coverage</div>
-              <div className="text-3xl font-black italic">{liabilityCoverage}x</div>
+              <div className="text-3xl font-black">{liabilityCoverage}x</div>
               <p className="text-[8px] text-gray-500 mt-1 uppercase font-bold">Assets vs Debt Ratio</p>
             </div>
           </div>

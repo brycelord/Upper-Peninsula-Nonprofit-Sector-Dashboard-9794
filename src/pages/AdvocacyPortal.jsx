@@ -21,7 +21,7 @@ const AdvocacyPortal = () => {
               <div className="inline-flex items-center gap-2 px-2.5 py-0.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-2 shadow-md shadow-blue-200">
                 <SafeIcon icon={FiShield} /> Public Policy & Advocacy Engine
               </div>
-              <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter italic uppercase mb-1">Legislative Mapping</h1>
+              <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter uppercase mb-1">Legislative Mapping</h1>
               <p className="text-gray-500 font-medium text-sm max-w-2xl">
                 Connecting regional nonprofit economic data to Michigan's Legislative Districts.
               </p>
@@ -57,7 +57,7 @@ const AdvocacyPortal = () => {
                 <SafeIcon icon={FiFileText} className="text-[240px]" />
               </div>
               <div className="relative z-10">
-                <h2 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter mb-2 text-yellow-400">Toolkit for Advocates</h2>
+                <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter mb-2 text-yellow-400">Toolkit for Advocates</h2>
                 <p className="text-gray-400 mb-4 max-w-xl font-medium leading-relaxed text-sm">
                   Download pre-formatted data sheets tailored for meetings with local representatives.
                 </p>

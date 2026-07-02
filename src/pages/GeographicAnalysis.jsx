@@ -53,7 +53,7 @@ const GeographicAnalysis = () => {
                 <SafeIcon icon={FiMap} className="text-xl text-yellow-400" />
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter italic uppercase">Geospatial Analysis</h1>
+                <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tighter uppercase">Geospatial Analysis</h1>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                   FY {filters.year} Verified Data Reliability System
                 </p>
@@ -92,7 +92,7 @@ const GeographicAnalysis = () => {
                 <div className="bg-gray-900 rounded-2xl p-4 md:p-5 text-white shadow-lg border-t-4 border-yellow-400">
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <h2 className="text-xl md:text-2xl font-black uppercase italic tracking-tighter leading-none">{selectedCountyName}</h2>
+                      <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none">{selectedCountyName}</h2>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Regional Profile</p>
                     </div>
                     <DataConfidenceBadge score={selectedCounty.confidence} />
