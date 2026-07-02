@@ -50,6 +50,7 @@ function MapController({ selectedCounty }) {
 
 const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
   const [internalSelected, setInternalSelected] = useState('Marquette County');
+  
   const displaySelected = activeCounty || internalSelected;
 
   const handleMarkerClick = (county) => {
@@ -58,7 +59,7 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
   };
 
   return (
-    <div className="relative w-full h-full rounded-b-2xl overflow-hidden group isolate z-0">
+    <div className="relative w-full h-full rounded-b-2xl overflow-hidden group">
       <MapContainer 
         center={center} 
         zoom={7} 
@@ -76,11 +77,11 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
             key={county.name}
             center={[county.lat, county.lng]}
             radius={Math.sqrt(county.organizations) * 0.8 + 5}
-            pathOptions={{
-              fillColor: displaySelected === county.name ? "#ffc425" : "#095339",
-              fillOpacity: 0.8,
-              color: "#ffffff",
-              weight: 2
+            pathOptions={{ 
+              fillColor: displaySelected === county.name ? "#FFC627" : "#005C46", 
+              fillOpacity: 0.8, 
+              color: "#ffffff", 
+              weight: 2 
             }}
             eventHandlers={{
               click: () => handleMarkerClick(county),
@@ -106,7 +107,8 @@ const InteractiveMap = ({ onSelectCounty, activeCounty }) => {
           </CircleMarker>
         ))}
       </MapContainer>
-      <div className="absolute top-4 left-4 z-[400] pointer-events-none">
+
+      <div className="absolute top-4 left-4 z-[1000] pointer-events-none">
         <div className="bg-white/90 backdrop-blur-md p-3 rounded-xl border border-gray-200 shadow-xl pointer-events-auto">
           <div className="flex items-center gap-2 text-xs font-black uppercase tracking-tight text-gray-900">
             <SafeIcon icon={FiMapPin} className="text-yellow-500" />

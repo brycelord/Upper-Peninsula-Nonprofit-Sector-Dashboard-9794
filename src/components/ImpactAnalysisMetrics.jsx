@@ -66,7 +66,7 @@ const ImpactAnalysisMetrics = ({ county }) => {
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black text-gray-900">{metric.score}</span>
-                <span className="text-[10px] text-gray-400 uppercase">/ {metric.max}</span>
+                <span className="text-[10px] font-bold text-gray-400 uppercase">/ {metric.max}</span>
               </div>
             </div>
 

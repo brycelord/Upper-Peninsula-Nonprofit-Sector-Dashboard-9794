@@ -40,7 +40,7 @@ const CaseStudySection = ({ selectedCounty }) => {
     <div className="mt-12">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-sm font-black uppercase tracking-widest text-gray-900">Regional Impact Spotlights</h3>
+          <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 italic">Regional Impact Spotlights</h3>
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Real Stories Behind the Data</p>
         </div>
         <div className="p-2 bg-red-100 text-red-600 rounded-lg">
@@ -70,7 +70,7 @@ const CaseStudySection = ({ selectedCounty }) => {
               <div className="flex items-center gap-1 text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">
                 <SafeIcon icon={FiMapPin} /> {study.county}
               </div>
-              <h4 className="text-lg font-black text-gray-900 tracking-tighter leading-tight mb-2 uppercase">
+              <h4 className="text-lg font-black text-gray-900 tracking-tighter leading-tight mb-2 uppercase italic">
                 {study.name}
               </h4>
               <p className="text-[11px] text-gray-500 font-medium leading-relaxed mb-4 italic">

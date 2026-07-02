@@ -88,7 +88,7 @@ const CountyDataGrid = ({ data, onRowClick, selectedCounty }) => {
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <span className={`text-sm ${selectedCounty === item.name ? 'text-gray-900' : 'text-gray-600 group-hover:text-gray-900'}`}>
+                      <span className={`text-sm font-bold ${selectedCounty === item.name ? 'text-gray-900' : 'text-gray-600 group-hover:text-gray-900'}`}>
                         {item.name}
                       </span>
                       {selectedCounty === item.name && (
@@ -100,11 +100,11 @@ const CountyDataGrid = ({ data, onRowClick, selectedCounty }) => {
                     <span className="text-sm font-medium text-gray-500">{item.population.toLocaleString()}</span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
-                    <span className="text-sm text-gray-900">{item.organizations}</span>
+                    <span className="text-sm font-bold text-gray-900">{item.organizations}</span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
                     <div className="flex items-center justify-end gap-2">
-                        <span className={`text-sm ${item.density > 8 ? 'text-green-600' : 'text-gray-700'}`}>{item.density.toFixed(2)}</span>
+                        <span className={`text-sm font-bold ${item.density > 8 ? 'text-green-600' : 'text-gray-700'}`}>{item.density.toFixed(2)}</span>
                         {item.density > 8 && <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>}
                     </div>
                   </td>

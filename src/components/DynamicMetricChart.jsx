@@ -58,11 +58,11 @@ const DynamicMetricChart = ({
           data: rawData.map(d => d.value),
           smooth: true,
           symbolSize: isScatter ? 15 : 8,
-          itemStyle: { color: '#095339' },
+          itemStyle: { color: '#14364D' },
           areaStyle: chartType === 'line' ? {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(9, 83, 57, 0.25)' },
-              { offset: 1, color: 'rgba(9, 83, 57, 0)' }
+              { offset: 0, color: 'rgba(20, 54, 77, 0.2)' },
+              { offset: 1, color: 'rgba(20, 54, 77, 0)' }
             ])
           } : undefined,
           lineStyle: { width: 4 },
@@ -73,8 +73,8 @@ const DynamicMetricChart = ({
             name: 'UP Average',
             type: 'line',
             data: benchmarks.map(b => b.upAverage),
-            lineStyle: { width: 2, type: 'dotted', color: '#ffc425' },
-            itemStyle: { color: '#ffc425' },
+            lineStyle: { width: 2, type: 'dotted', color: '#FFBD00' },
+            itemStyle: { color: '#FFBD00' },
             symbol: 'none'
           }
         ] : [])
@@ -96,7 +96,7 @@ const DynamicMetricChart = ({
     <div className="w-full bg-white rounded-[32px] p-8 shadow-2xl border border-gray-100">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">
+          <h3 className="text-xl font-black uppercase italic tracking-tighter text-gray-900">
             {metric.replace(/([A-Z])/g, ' $1')} Velocity
           </h3>
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
@@ -105,12 +105,12 @@ const DynamicMetricChart = ({
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg">
-            <div className="w-2 h-2 bg-[#095339] rounded-full" />
+            <div className="w-2 h-2 bg-[#14364D] rounded-full" />
             <span className="text-[9px] font-black uppercase text-gray-500">Subject</span>
           </div>
           {showBenchmarks && (
             <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-50 rounded-lg">
-              <div className="w-2 h-2 bg-[#ffc425] rounded-full" />
+              <div className="w-2 h-2 bg-[#FFBD00] rounded-full" />
               <span className="text-[9px] font-black uppercase text-yellow-700">UP Benchmark</span>
             </div>
           )}

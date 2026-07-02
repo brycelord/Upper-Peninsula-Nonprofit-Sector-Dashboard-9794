@@ -1,87 +1,124 @@
-/* Northern Michigan University (NMU) Brand System */
-:root {
-  --nmu-green: #095339;
-  --nmu-green-light: #0d7a53;
-  --nmu-green-dark: #053726;
-  --nmu-gold: #ffc425;
-  --nmu-gold-light: #ffd966;
-  --nmu-gold-dark: #e5ac00;
-  --nmu-red: #c41230;
-  --nmu-white: #ffffff;
-  --nmu-black: #000000;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
 
-  /* Legacy aliases mapped to NMU palette so references in existing code resolve to brand colors */
-  --primary-yellow: var(--nmu-gold);
-  --primary-black: var(--nmu-black);
-  --secondary-white: var(--nmu-white);
-  --secondary-dark-blue: var(--nmu-green);
-  --secondary-teal: var(--nmu-green-light);
-  --secondary-light-teal: var(--nmu-gold-light);
-  --secondary-lime: var(--nmu-gold);
-  --secondary-orange: var(--nmu-gold);
-  --secondary-cream: #fff9e6;
+/* Custom styles for the nonprofit dashboard */
+/* Northern Michigan University Branding */
+:root {
+  --primary-yellow: #FFC627;
+  --primary-black: #000000;
+  --secondary-white: #ffffff;
+  --secondary-dark-blue: #005C46; /* NMU Green */
+  --secondary-teal: #004836;      /* NMU Dark Green */
+  --secondary-light-teal: #66D5B9;
+  --secondary-lime: #CFD25B;
+  --secondary-orange: #F79651;
+  --secondary-cream: #FEF2DA;
 }
 
+/* Font imports - Futura PT and Roboto */
 body {
-  font-family: 'Outfit', 'Cera Pro', 'Cera', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', 'Cera Pro', 'Cera', sans-serif;
+  font-family: 'futura-pt', 'Roboto', sans-serif;
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 ::-webkit-scrollbar-thumb {
-  background: var(--nmu-green);
+  background: var(--primary-yellow);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--nmu-green-dark); }
+::-webkit-scrollbar-thumb:hover {
+  background: #e6a900;
+}
 
-/* Button primary */
+/* Smooth animations */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom button hover effects */
 .btn-primary {
-  background-color: var(--nmu-gold);
-  color: var(--nmu-green-dark);
+  background-color: var(--primary-yellow);
+  color: var(--primary-black);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
+
 .btn-primary:hover {
-  background-color: var(--nmu-gold-dark);
+  background-color: #e6a900;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(9, 83, 57, 0.25);
+  box-shadow: 0 4px 12px rgba(255, 198, 39, 0.3);
 }
 
-.card-hover { transition: all 0.3s ease-in-out; }
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease-in-out;
+}
+
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(9, 83, 57, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.loading-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+/* Loading animations */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .5; }
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
 }
 
+/* Accessibility improvements */
 .focus-visible:focus {
-  outline: 2px solid var(--nmu-gold);
+  outline: 2px solid var(--primary-yellow);
   outline-offset: 2px;
 }
 
+/* Print styles */
 @media print {
-  .no-print { display: none !important; }
-  .print-break { page-break-before: always; }
+  .no-print {
+    display: none !important;
+  }
+  .print-break {
+    page-break-before: always;
+  }
 }
 
+/* Mobile optimizations */
 @media (max-width: 640px) {
-  .mobile-stack { flex-direction: column; }
-  .mobile-full { width: 100%; }
+  .mobile-stack {
+    flex-direction: column;
+  }
+  .mobile-full {
+    width: 100%;
+  }
 }
 
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-yellow: #FFD700;
+    --secondary-dark-blue: #000080;
+  }
+}
+
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -90,28 +127,51 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.chart-container { position: relative; height: 400px; width: 100%; }
-.chart-container canvas { max-height: 100% !important; }
+/* Custom chart container styles */
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
 
-.data-table { border-collapse: collapse; width: 100%; }
-.data-table th, .data-table td {
+.chart-container canvas {
+  max-height: 100% !important;
+}
+
+/* Data table styles */
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.data-table th,
+.data-table td {
   border: 1px solid #e5e7eb;
   padding: 0.75rem;
   text-align: left;
 }
-.data-table th {
-  background-color: var(--nmu-green);
-  color: var(--nmu-white);
-  font-weight: 600;
-}
-.data-table tbody tr:hover { background-color: #f0f8f4; }
 
-.tooltip { position: relative; display: inline-block; }
+.data-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
 .tooltip .tooltip-text {
   visibility: hidden;
   width: 200px;
-  background-color: var(--nmu-green-dark);
-  color: var(--nmu-white);
+  background-color: #374151;
+  color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 8px;
@@ -124,32 +184,59 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.3s;
   font-size: 0.875rem;
 }
-.tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
 
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Map styles */
 .interactive-map {
-  background: linear-gradient(135deg, #f0f8f4 0%, #e0f0e8 100%);
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border-radius: 0.5rem;
   overflow: hidden;
 }
-.map-marker { cursor: pointer; transition: all 0.2s ease-in-out; }
-.map-marker:hover { transform: scale(1.2); }
 
-.status-positive { color: var(--nmu-green); }
-.status-negative { color: var(--nmu-red); }
-.status-neutral { color: #6b7280; }
+.map-marker {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
 
+.map-marker:hover {
+  transform: scale(1.2);
+}
+
+/* Status indicators */
+.status-positive {
+  color: #059669;
+}
+.status-negative {
+  color: #dc2626;
+}
+.status-neutral {
+  color: #6b7280;
+}
+
+/* Loading states */
 .skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: loading 1.5s infinite;
 }
+
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
-.responsive-text { font-size: clamp(1rem, 2.5vw, 1.5rem); }
-.responsive-padding { padding: clamp(1rem, 4vw, 2rem); }
-
-.animate-spin-slow { animation: spin-slow 3s linear infinite; }
-@keyframes spin-slow { to { transform: rotate(360deg); } }
+/* Responsive utilities */
+.responsive-text {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+.responsive-padding {
+  padding: clamp(1rem, 4vw, 2rem);
+}

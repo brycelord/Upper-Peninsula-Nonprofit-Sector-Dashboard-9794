@@ -55,12 +55,12 @@ const SyncIndicator = () => {
               </div>
               <div className="flex-grow">
                 <div className="flex justify-between items-start">
-                  <h4 className="text-sm font-black uppercase tracking-tighter text-gray-900 leading-none">Integrity Sync Required</h4>
+                  <h4 className="text-sm font-black uppercase tracking-tighter italic text-gray-900 leading-none">Integrity Sync Required</h4>
                   <button onClick={dismissRequired} className="text-gray-300 hover:text-gray-600 transition-colors">
                     <SafeIcon icon={FiX} />
                   </button>
                 </div>
-                <p className="text-[10px] text-gray-500 leading-relaxed mt-2 uppercase tracking-tight">
+                <p className="text-[10px] text-gray-500 font-bold leading-relaxed mt-2 uppercase tracking-tight">
                   Regional registry is out of sync with 2024-Q1 benchmarks. Verified data integrity score is currently degraded.
                 </p>
                 <div className="flex gap-2 mt-5">
@@ -96,7 +96,7 @@ const SyncIndicator = () => {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-yellow-400">Auditing Registry</span>
-              <span className="text-xs font-bold leading-none mt-1 uppercase tracking-tighter">Parsing 15 UP Jurisdictions...</span>
+              <span className="text-xs font-bold leading-none mt-1 italic uppercase tracking-tighter">Parsing 15 UP Jurisdictions...</span>
             </div>
           </motion.div>
         )}
@@ -112,7 +112,7 @@ const SyncIndicator = () => {
             <SafeIcon icon={FiCheckCircle} className="text-2xl" />
             <div className="flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-green-100">Audit Successful</span>
-              <span className="text-xs font-bold uppercase tracking-tighter">{syncCount.toLocaleString()} Records Re-Verified</span>
+              <span className="text-xs font-bold italic uppercase tracking-tighter">{syncCount.toLocaleString()} Records Re-Verified</span>
             </div>
           </motion.div>
         )}
@@ -152,7 +152,7 @@ const SyncIndicator = () => {
             </div>
             <div className="text-left">
               <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-1">Regional Data Sync</span>
-              <span className="block text-[10px] font-black text-gray-900 uppercase tracking-tighter">
+              <span className="block text-[10px] font-black text-gray-900 uppercase italic tracking-tighter">
                 {lastSync ? `AUDITED: ${new Date(lastSync).toLocaleDateString()}` : 'NOT VERIFIED'}
               </span>
             </div>

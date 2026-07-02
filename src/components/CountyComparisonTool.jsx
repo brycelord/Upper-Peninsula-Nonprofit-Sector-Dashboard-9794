@@ -69,15 +69,15 @@ const CountyComparisonTool = ({ data }) => {
           {
             value: metrics.map(m => statsA[m.key]),
             name: countyA,
-            itemStyle: { color: '#095339' },
-            areaStyle: { opacity: 0.25, color: '#095339' },
+            itemStyle: { color: '#14364D' },
+            areaStyle: { opacity: 0.25, color: '#14364D' },
             lineStyle: { width: 3 }
           },
           {
             value: metrics.map(m => statsB[m.key]),
             name: countyB,
-            itemStyle: { color: '#ffc425' },
-            areaStyle: { opacity: 0.35, color: '#ffc425' },
+            itemStyle: { color: '#FFBD00' },
+            areaStyle: { opacity: 0.35, color: '#FFBD00' },
             lineStyle: { width: 3 }
           }
         ]
@@ -127,7 +127,7 @@ const CountyComparisonTool = ({ data }) => {
             <SafeIcon icon={FiRepeat} className="text-2xl" />
           </div>
           <div>
-            <h3 className="text-2xl font-black text-white tracking-tighter uppercase">Subject Comparison</h3>
+            <h3 className="text-2xl font-black text-white italic tracking-tighter uppercase">Subject Comparison</h3>
             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em]">Regional Variance & Delta Analysis</p>
           </div>
         </div>
@@ -198,10 +198,10 @@ const CountyComparisonTool = ({ data }) => {
 
                   <div className="flex items-end justify-between mb-4">
                     <div className="flex flex-col">
-                      <span className="text-2xl font-black text-gray-900 tracking-tighter uppercase">{m.format(statsA[m.key])}</span>
+                      <span className="text-2xl font-black text-gray-900 tracking-tighter italic uppercase">{m.format(statsA[m.key])}</span>
                     </div>
                     <div className="flex flex-col text-right">
-                      <span className="text-2xl font-black text-gray-400 tracking-tighter uppercase">{m.format(statsB[m.key])}</span>
+                      <span className="text-2xl font-black text-gray-400 tracking-tighter italic uppercase">{m.format(statsB[m.key])}</span>
                     </div>
                   </div>
 

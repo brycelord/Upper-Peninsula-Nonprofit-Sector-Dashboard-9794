@@ -21,7 +21,7 @@ const ReliabilityReport = ({ countyData }) => {
     <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 mt-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xs font-black uppercase tracking-widest text-gray-900">Data Reliability Index</h3>
+          <h3 className="text-xs font-black uppercase tracking-widest text-gray-900 italic">Data Reliability Index</h3>
           <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Technical Quality Audit</p>
         </div>
         <div className="p-2 bg-gray-100 text-gray-400 rounded-lg">

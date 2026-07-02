@@ -25,7 +25,7 @@ const PrintableCountyReport = ({ county }) => {
       <div className="hidden print:block fixed inset-0 bg-white z-[9999] p-12 text-black overflow-y-auto">
         <div className="border-b-4 border-yellow-400 pb-8 mb-12 flex justify-between items-end">
           <div>
-            <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">County Economic Summary</h1>
+            <h1 className="text-5xl font-black uppercase italic tracking-tighter mb-2">County Economic Summary</h1>
             <p className="text-sm font-bold text-gray-500 uppercase tracking-widest">Report Generated: {new Date().toLocaleDateString()}</p>
           </div>
           <div className="text-right">
@@ -85,11 +85,11 @@ const PrintableCountyReport = ({ county }) => {
                 The nonprofit sector in {county.name} represents a critical economic anchor, accounting for approximately {((county.employment / county.population) * 100).toFixed(1)}% of total regional population employment.
               </p>
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm border-b pb-2">
+                <div className="flex justify-between items-center text-sm font-bold border-b pb-2">
                   <span>Economic Multiplier</span>
                   <span>1.48x</span>
                 </div>
-                <div className="flex justify-between items-center text-sm border-b pb-2">
+                <div className="flex justify-between items-center text-sm font-bold border-b pb-2">
                   <span>Direct Spend Impact</span>
                   <span>${(county.revenue * 1.32 / 1e6).toFixed(1)}M</span>
                 </div>
@@ -99,7 +99,7 @@ const PrintableCountyReport = ({ county }) => {
         </div>
 
         <div className="mt-auto pt-12 border-t text-[10px] text-center text-gray-400 font-bold uppercase tracking-widest">
-          University of Michigan - Upper Peninsula Research & Analytics Department
+          Northern Michigan University Research & Analytics Department
         </div>
       </div>
     </>

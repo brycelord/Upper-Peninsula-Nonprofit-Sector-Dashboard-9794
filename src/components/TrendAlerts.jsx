@@ -76,7 +76,7 @@ const TrendAlerts = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-black uppercase tracking-widest text-gray-900">Regional Signals</h3>
+          <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 italic">Regional Signals</h3>
           <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Automated Trend Detection</p>
         </div>
         <div className="px-2 py-1 bg-gray-900 text-yellow-400 rounded text-[8px] font-black uppercase flex items-center gap-1">

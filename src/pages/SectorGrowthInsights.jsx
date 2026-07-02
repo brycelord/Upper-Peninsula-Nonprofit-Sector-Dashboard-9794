@@ -17,7 +17,7 @@ const SectorGrowthInsights = () => {
     datasets: [{
       label: 'Revenue by Sector',
       data: sectorData.map(s => s.revenue),
-      backgroundColor: ['#095339', '#ffc425', '#0d7a53', '#ffd966', '#053726', '#e5ac00']
+      backgroundColor: ['#14364D', '#035056', '#4CC0B0', '#CFD25B', '#F79651', '#FFBD00']
     }]
   };
 
@@ -39,7 +39,7 @@ const SectorGrowthInsights = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           <div className="lg:col-span-8 bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">Revenue Distribution</h2>
+              <h2 className="text-2xl font-black text-gray-900 uppercase italic tracking-tighter">Revenue Distribution</h2>
               <SafeIcon icon={FiTrendingUp} className="text-yellow-500 text-2xl" />
             </div>
             <div className="h-[400px]">

@@ -53,7 +53,7 @@ const CountyTrendChart = ({ countyName, metric, data, color, showBenchmarks = tr
           type: 'line',
           smooth: true,
           symbolSize: 6,
-          itemStyle: { color: color || '#ffc425' },
+          itemStyle: { color: color || '#FFBD00' },
           lineStyle: { width: 3 }
         },
         ...(showBenchmarks ? [
