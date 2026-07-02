@@ -26,7 +26,7 @@ const DataConfidenceBadge = ({ score, size = 'md' }) => {
       {/* Tooltip */}
       <div className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-gray-900 text-white text-[9px] rounded-xl shadow-2xl z-50 normal-case leading-relaxed font-medium">
         <p className="font-black text-yellow-400 mb-1 uppercase tracking-widest">Data Integrity Report</p>
-        Confidence Score: <span className="font-bold">{(score * 100).toFixed(0)}%</span>
+        Confidence Score: <span>{(score * 100).toFixed(0)}%</span>
         <br />
         <span className="text-gray-400 italic">
           Based on sample size, reporting frequency, and historical variance for this specific region.

@@ -187,7 +187,7 @@ const GlobalFilterHeader = () => {
 
                 <div className="flex items-center">
                   <div className="px-4 py-3 bg-[#095339]/5 rounded-2xl border border-[#095339]/10 w-full">
-                    <p className="text-[8px] text-[#095339] font-bold uppercase tracking-[0.18em] leading-relaxed">
+                    <p className="text-[8px] text-[#095339] uppercase tracking-[0.18em] leading-relaxed">
                       Filters persist across every dashboard view to maintain research context.
                     </p>
                   </div>

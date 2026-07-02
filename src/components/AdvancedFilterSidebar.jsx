@@ -26,7 +26,7 @@ const AdvancedFilterSidebar = ({ filters, setFilters, onClear, resultsCount }) =
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-50">
         <div>
           <h2 className="text-xl font-black uppercase tracking-tighter">Registry Filter</h2>
-          <p className="text-[10px] text-gray-400 font-bold uppercase">{resultsCount.toLocaleString()} Records Found</p>
+          <p className="text-[10px] text-gray-400 uppercase">{resultsCount.toLocaleString()} Records Found</p>
         </div>
         <button 
           onClick={onClear}

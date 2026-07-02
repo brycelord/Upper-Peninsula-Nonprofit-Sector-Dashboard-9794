@@ -252,9 +252,9 @@ const DataExplorer = () => {
                         <td className="px-4 py-3">
                           <div className="text-xs font-black text-gray-900 uppercase tracking-tight group-hover:text-blue-600 transition-colors">{item.name}</div>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-[9px] font-bold text-gray-400 uppercase">EIN: {item.ein}</span>
+                            <span className="text-[9px] text-gray-400 uppercase">EIN: {item.ein}</span>
                             <span className="w-1 h-1 bg-gray-300 rounded-full" />
-                            <span className="text-[9px] font-bold text-gray-400 uppercase">{item.county} County</span>
+                            <span className="text-[9px] text-gray-400 uppercase">{item.county} County</span>
                           </div>
                         </td>
                         <td className="px-4 py-3">
@@ -273,7 +273,7 @@ const DataExplorer = () => {
                         <td className="px-4 py-3">
                           <div className="flex flex-col">
                             <span className="text-xs font-black text-gray-900">${(item.revenue / 1e6).toFixed(2)}M Rev</span>
-                            <span className="text-[9px] font-bold text-teal-600 uppercase tracking-widest">{item.employees} Personnel</span>
+                            <span className="text-[9px] text-teal-600 uppercase tracking-widest">{item.employees} Personnel</span>
                           </div>
                         </td>
                         <td className="px-4 py-3 text-right">

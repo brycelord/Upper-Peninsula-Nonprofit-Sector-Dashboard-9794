@@ -60,7 +60,7 @@ const SyncIndicator = () => {
                     <SafeIcon icon={FiX} />
                   </button>
                 </div>
-                <p className="text-[10px] text-gray-500 font-bold leading-relaxed mt-2 uppercase tracking-tight">
+                <p className="text-[10px] text-gray-500 leading-relaxed mt-2 uppercase tracking-tight">
                   Regional registry is out of sync with 2024-Q1 benchmarks. Verified data integrity score is currently degraded.
                 </p>
                 <div className="flex gap-2 mt-5">

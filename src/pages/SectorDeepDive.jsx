@@ -90,12 +90,12 @@ const SectorDeepDive = () => {
                         </div>
                         <div>
                           <div className="text-xs font-black text-gray-900 uppercase tracking-tight">{org.name}</div>
-                          <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{org.county} County • {org.ein}</div>
+                          <div className="text-[9px] text-gray-400 uppercase tracking-widest">{org.county} County • {org.ein}</div>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-xs font-black text-gray-900">${(org.revenue / 1e6).toFixed(1)}M</div>
-                        <div className="text-[9px] font-bold text-teal-600 uppercase">{org.employees} Employees</div>
+                        <div className="text-[9px] text-teal-600 uppercase">{org.employees} Employees</div>
                       </div>
                     </div>
                   ))}

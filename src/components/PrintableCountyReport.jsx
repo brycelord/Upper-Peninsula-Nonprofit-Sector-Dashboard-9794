@@ -85,11 +85,11 @@ const PrintableCountyReport = ({ county }) => {
                 The nonprofit sector in {county.name} represents a critical economic anchor, accounting for approximately {((county.employment / county.population) * 100).toFixed(1)}% of total regional population employment.
               </p>
               <div className="space-y-4">
-                <div className="flex justify-between items-center text-sm font-bold border-b pb-2">
+                <div className="flex justify-between items-center text-sm border-b pb-2">
                   <span>Economic Multiplier</span>
                   <span>1.48x</span>
                 </div>
-                <div className="flex justify-between items-center text-sm font-bold border-b pb-2">
+                <div className="flex justify-between items-center text-sm border-b pb-2">
                   <span>Direct Spend Impact</span>
                   <span>${(county.revenue * 1.32 / 1e6).toFixed(1)}M</span>
                 </div>

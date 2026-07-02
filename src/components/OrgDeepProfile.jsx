@@ -123,7 +123,7 @@ const OrgDeepProfile = ({ org, onClose }) => {
             <SafeIcon icon={FiMapPin} className="text-gray-400 mt-1" />
             <div>
               <div className="text-[9px] font-black text-gray-400 uppercase mb-1">Registry Location Data</div>
-              <p className="text-xs font-bold text-gray-800 uppercase leading-tight">
+              <p className="text-xs text-gray-800 uppercase leading-tight">
                 {org.address}<br />
                 {org.city}, MI {org.zip}
               </p>

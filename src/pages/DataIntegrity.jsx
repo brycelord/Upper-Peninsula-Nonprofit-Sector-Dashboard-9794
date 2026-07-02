@@ -115,7 +115,7 @@ const DataIntegrity = () => {
                   <tr key={county.name} className="hover:bg-gray-50/50 transition-colors group">
                     <td className="px-4 py-2.5">
                       <div className="text-xs font-black text-gray-900 uppercase tracking-tight">{county.name}</div>
-                      <div className="text-[9px] font-bold text-gray-400 uppercase">Registry: {county.count} Orgs</div>
+                      <div className="text-[9px] text-gray-400 uppercase">Registry: {county.count} Orgs</div>
                     </td>
                     <td className="px-4 py-2.5">
                       <div className="flex items-center justify-center gap-3">

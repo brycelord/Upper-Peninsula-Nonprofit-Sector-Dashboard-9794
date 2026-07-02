@@ -60,7 +60,7 @@ const SectorOverview = () => {
                 {sectorData.map((sector) => (
                   <div key={sector.name} className="border-b border-gray-800 pb-2">
                     <div className="flex justify-between items-end mb-1">
-                      <span className="text-xs font-bold text-gray-400">{sector.name}</span>
+                      <span className="text-xs text-gray-400">{sector.name}</span>
                       <span className="text-sm font-black">{sector.count} <span className="text-[9px] text-gray-500 uppercase">Orgs</span></span>
                     </div>
                     <div className="w-full bg-gray-800 h-1 rounded-full overflow-hidden">

@@ -143,7 +143,7 @@ const EconomicImpactCalculator = () => {
               onChange={(e) => setParams({ ...params, orgCount: parseInt(e.target.value) })}
               className="w-full accent-[#ffc425]"
             />
-            <div className="flex justify-between text-[9px] text-gray-400 font-bold mt-0.5">
+            <div className="flex justify-between text-[9px] text-gray-400 mt-0.5">
               <span>1</span><span>125</span><span>250</span>
             </div>
           </div>
@@ -161,7 +161,7 @@ const EconomicImpactCalculator = () => {
               onChange={(e) => setParams({ ...params, avgEmployees: parseInt(e.target.value) })}
               className="w-full accent-[#095339]"
             />
-            <div className="flex justify-between text-[9px] text-gray-400 font-bold mt-0.5">
+            <div className="flex justify-between text-[9px] text-gray-400 mt-0.5">
               <span>1</span><span>50</span><span>100</span>
             </div>
           </div>
@@ -180,7 +180,7 @@ const EconomicImpactCalculator = () => {
               onChange={(e) => setParams({ ...params, avgRevenue: parseInt(e.target.value) })}
               className="w-full accent-[#c41230]"
             />
-            <div className="flex justify-between text-[9px] text-gray-400 font-bold mt-0.5">
+            <div className="flex justify-between text-[9px] text-gray-400 mt-0.5">
               <span>$50K</span><span>$1M</span><span>$2M</span>
             </div>
           </div>
