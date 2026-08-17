@@ -10,10 +10,9 @@ import CaseStudySection from '../components/CaseStudySection';
 import { getAggregates } from '../services/dataService';
 import { useFilters } from '../context/FilterContext';
 import * as FiIcons from 'react-icons/fi';
+import { LAST_UPDATED } from '../constants';
 
 const { FiDatabase, FiTrendingUp, FiInfo, FiUsers, FiFilter, FiBarChart2, FiClock, FiBook } = FiIcons;
-
-const LAST_UPDATED = 'August 2024';
 
 const Dashboard = () => {
   const { filters } = useFilters();

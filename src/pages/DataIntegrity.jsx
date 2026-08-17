@@ -5,10 +5,9 @@ import SafeIcon from '../common/SafeIcon';
 import DataIntegrityCard from '../components/DataIntegrityCard';
 import { COUNTIES } from '../services/dataService';
 import * as FiIcons from 'react-icons/fi';
+import { LAST_UPDATED } from '../constants';
 
 const { FiShield, FiActivity, FiSearch, FiAlertCircle, FiCheck, FiCpu, FiDatabase, FiRefreshCw, FiCalendar, FiBookOpen, FiClock } = FiIcons;
-
-const LAST_UPDATED = 'August 2024';
 
 const DataIntegrity = () => {
   const overallConfidence = useMemo(() => {
