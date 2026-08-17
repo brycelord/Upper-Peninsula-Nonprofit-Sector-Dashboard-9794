@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import StatCard from '../components/StatCard';
@@ -10,7 +11,9 @@ import { getAggregates } from '../services/dataService';
 import { useFilters } from '../context/FilterContext';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiDatabase, FiTrendingUp } = FiIcons;
+const { FiDatabase, FiTrendingUp, FiInfo, FiUsers, FiFilter, FiBarChart2, FiClock, FiBook } = FiIcons;
+
+const LAST_UPDATED = 'August 2024';
 
 const Dashboard = () => {
   const { filters } = useFilters();
@@ -35,6 +38,58 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="flex-grow py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Value Proposition Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 bg-gray-900 text-white rounded-[32px] px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl"
+          >
+            <div className="flex items-start gap-4">
+              <div className="mt-0.5 p-2.5 bg-yellow-400 text-gray-900 rounded-xl shrink-0">
+                <SafeIcon icon={FiInfo} className="text-lg" />
+              </div>
+              <div>
+                <p className="text-base font-bold leading-snug text-white">
+                  This dashboard helps policymakers, grantmakers, researchers, and community leaders discover and explore economic data for the Upper Peninsula nonprofit sector — covering employment, revenue, and organizational trends across all 15 UP counties.
+                </p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {['Nonprofit Executives', 'Grantmakers', 'Researchers', 'Students', 'Public-Sector Partners'].map(a => (
+                    <span key={a} className="inline-block px-3 py-1 bg-white/10 text-yellow-300 rounded-full text-[10px] font-black uppercase tracking-wider">{a}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-gray-400 text-[10px] font-bold uppercase tracking-widest shrink-0">
+              <SafeIcon icon={FiClock} />
+              Last updated: {LAST_UPDATED}
+            </div>
+          </motion.div>
+
+          {/* How to Use This Dashboard */}
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="mb-10 bg-yellow-50 border border-yellow-200 rounded-[28px] px-8 py-6"
+          >
+            <h2 className="text-[11px] font-black uppercase tracking-[0.25em] text-yellow-700 mb-3 flex items-center gap-2">
+              <SafeIcon icon={FiBook} /> How to use this dashboard
+            </h2>
+            <ul className="space-y-2">
+              {[
+                { icon: FiFilter, text: 'Use the filter bar above to narrow data by county, sector, year, or organization size.' },
+                { icon: FiBarChart2, text: 'Compare counties or sectors side-by-side on the Geographic Analysis and Sector Overview pages.' },
+                { icon: FiTrendingUp, text: 'Explore multi-year trends and growth trajectories on the Historical Trends page.' },
+                { icon: FiInfo, text: 'Review data sources, confidence scores, and methodology on the Integrity and Methodology pages.' },
+              ].map(({ icon, text }, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-yellow-900 font-medium">
+                  <SafeIcon icon={icon} className="shrink-0 mt-0.5 text-yellow-600" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div className="flex items-center gap-4">
