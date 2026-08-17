@@ -14,6 +14,7 @@ import HistoricalTrends from './pages/HistoricalTrends';
 import DataExplorer from './pages/DataExplorer';
 import ImpactCalculator from './pages/ImpactCalculator';
 import DataIntegrity from './pages/DataIntegrity';
+import Methodology from './pages/Methodology';
 import './App.css';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/data-explorer" element={<DataExplorer />} />
             <Route path="/impact-calculator" element={<ImpactCalculator />} />
             <Route path="/data-integrity" element={<DataIntegrity />} />
+            <Route path="/methodology" element={<Methodology />} />
           </Routes>
         </main>
         <Footer />

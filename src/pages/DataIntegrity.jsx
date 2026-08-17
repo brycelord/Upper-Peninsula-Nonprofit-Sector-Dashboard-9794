@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import DataIntegrityCard from '../components/DataIntegrityCard';
 import { COUNTIES } from '../services/dataService';
 import * as FiIcons from 'react-icons/fi';
+import { LAST_UPDATED } from '../constants';
 
-const { FiShield, FiActivity, FiSearch, FiAlertCircle, FiCheck, FiCpu } = FiIcons;
+const { FiShield, FiActivity, FiSearch, FiAlertCircle, FiCheck, FiCpu, FiDatabase, FiRefreshCw, FiCalendar, FiBookOpen, FiClock } = FiIcons;
 
 const DataIntegrity = () => {
   const overallConfidence = useMemo(() => {
@@ -159,6 +161,78 @@ const DataIntegrity = () => {
             </p>
           </div>
         </div>
+
+        {/* About the Data */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-8 bg-white rounded-[32px] shadow-md border border-gray-100 p-8"
+        >
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-gray-900 text-yellow-400 rounded-2xl shadow">
+                <SafeIcon icon={FiDatabase} className="text-xl" />
+              </div>
+              <div>
+                <h2 className="text-xl font-black uppercase tracking-tighter text-gray-900">About the Data</h2>
+                <div className="flex items-center gap-2 mt-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <SafeIcon icon={FiClock} />
+                  Last updated: {LAST_UPDATED}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            {[
+              {
+                icon: FiDatabase,
+                label: 'Primary Sources',
+                text: 'IRS Business Master File (BMF), IRS Form 990 digitized filings, and ProPublica Nonprofit Explorer API v2.'
+              },
+              {
+                icon: FiCalendar,
+                label: 'Coverage Dates',
+                text: 'Historical data available from fiscal year 2010 through the most recent completed ingestion cycle. Pre-2010 data is excluded due to inconsistent digitization.'
+              },
+              {
+                icon: FiRefreshCw,
+                label: 'Refresh Frequency',
+                text: 'Organizational registry re-validated monthly. Full financial re-ingestion runs quarterly. IRS filing lag means the most recent complete financial year may be 12–18 months behind the current calendar year.'
+              }
+            ].map(({ icon, label, text }) => (
+              <div key={label} className="bg-gray-50 rounded-2xl p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <SafeIcon icon={icon} className="text-yellow-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">{label}</span>
+                </div>
+                <p className="text-sm text-gray-700 font-medium leading-relaxed">{text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <SafeIcon icon={FiAlertCircle} className="text-amber-600" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-amber-700">Known Limitations</span>
+            </div>
+            <ul className="text-sm text-amber-900 font-medium leading-relaxed list-disc pl-5 space-y-1">
+              <li>Rural counties (Keweenaw, Luce) have elevated uncertainty due to small org counts and limited 990 financial detail from 990-N filers.</li>
+              <li>Employment figures for 990-EZ/990-N filers are modeled estimates, not direct reports.</li>
+              <li>Church organizations that have not independently registered with the IRS are not captured in this dataset.</li>
+            </ul>
+          </div>
+
+          <div className="mt-5 flex items-center gap-3">
+            <SafeIcon icon={FiBookOpen} className="text-gray-400" />
+            <span className="text-xs text-gray-500 font-medium">
+              For full methodology details including geographic boundary definitions, nonprofit inclusion criteria, and sector taxonomy mappings, see the{' '}
+              <Link to="/methodology" className="text-yellow-600 hover:text-yellow-700 font-black underline underline-offset-2">
+                Methodology page
+              </Link>.
+            </span>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

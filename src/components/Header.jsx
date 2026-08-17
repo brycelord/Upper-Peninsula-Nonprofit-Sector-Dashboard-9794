@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import SafeIcon from '../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
-const { FiMenu, FiX, FiHome, FiPieChart, FiBriefcase, FiMap, FiDollarSign, FiSearch, FiTarget, FiShield } = FiIcons;
+const { FiMenu, FiX, FiHome, FiPieChart, FiBriefcase, FiMap, FiDollarSign, FiSearch, FiTarget, FiShield, FiBookOpen } = FiIcons;
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +19,8 @@ const Header = () => {
     { path: '/compensation-insights', label: 'Compensation', icon: FiDollarSign },
     { path: '/data-explorer', label: 'Explorer', icon: FiSearch },
     { path: '/impact-calculator', label: 'Impact Calc', icon: FiTarget },
-    { path: '/data-integrity', label: 'Integrity', icon: FiShield }
+    { path: '/data-integrity', label: 'Integrity', icon: FiShield },
+    { path: '/methodology', label: 'Methodology', icon: FiBookOpen }
   ];
 
   return (
